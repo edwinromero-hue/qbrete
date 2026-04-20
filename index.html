@@ -1,0 +1,3328 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Qbrete - Tu seguro reinventado</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&family=Montserrat:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&display=swap"
+    rel="stylesheet" />
+  <style>
+    *,
+    *::before,
+    *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: linear-gradient(155deg, #ffffff 0%, #fff7ed 100%);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* ===== SCROLL PROGRESS ===== */
+    .scroll-progress {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 3px;
+      background: linear-gradient(90deg, #FF4E00 0%, #FF8A5C 100%);
+      box-shadow: 0 0 8px rgba(255, 78, 0, 0.35);
+      z-index: 9999;
+      transform: scaleX(0);
+      transform-origin: left center;
+      will-change: transform;
+    }
+
+    /* ===== WRAPPER ===== */
+    .page-wrapper {
+      position: relative;
+      max-width: 1440px;
+      margin: 0 auto;
+    }
+
+    /* ===== FLOWING LINE ===== */
+    .flowing-line {
+      position: absolute;
+      top: -140px;
+      left: 0;
+      width: 100%;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .flowing-line svg {
+      width: 100%;
+      display: block;
+      overflow: visible;
+    }
+
+    /* ===== PRODUCTS SECTION — STACKED SLIDING CARDS ===== */
+    .section-products {
+      position: relative;
+      z-index: 1;
+      height: 200vh;
+      margin-top: 140px;
+    }
+
+    .products-sticky {
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 0 100px;
+      gap: 32px;
+    }
+
+    .products-header {
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
+      z-index: 10;
+    }
+
+    .products-header h2 {
+      font-family: 'Century Gothic', 'Montserrat', sans-serif;
+      font-size: 45px;
+      font-weight: 700;
+      color: #000;
+    }
+
+    .products-header .products-subtitle {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 18px;
+      font-weight: 400;
+      color: #000;
+    }
+
+    /* Tabs */
+    .products-tabs {
+      display: flex;
+      align-items: center;
+      gap: 32px;
+      background: #fff;
+      border-radius: 9999px;
+      padding: 8px 12px;
+      z-index: 10;
+    }
+
+    .products-tab {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 0 24px;
+      height: 41px;
+      border-radius: 9999px;
+      border: none;
+      cursor: pointer;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 14px;
+      font-weight: 600;
+      background: transparent;
+      color: #000;
+      transition: all 0.3s ease;
+    }
+
+    .products-tab svg {
+      width: 20px;
+      height: 20px;
+      flex-shrink: 0;
+    }
+
+    .products-tab.active {
+      background: linear-gradient(to bottom, #FF4E00, #FF8A5C);
+      color: #fff;
+    }
+
+    .products-tab.active svg {
+      color: #fff;
+    }
+
+    .products-tab:not(.active) svg {
+      color: #000;
+    }
+
+    /* Panels Stack */
+    .panels-stack {
+      position: relative;
+      width: 1240px;
+      height: 562px;
+    }
+
+    /* ===== NOTICIAS SECTION ===== */
+    .section-noticias {
+      max-width: 1240px;
+      margin: 140px auto 0;
+      padding: 0 4px;
+    }
+
+    .noticias-header {
+      margin-bottom: 32px;
+      text-align: center;
+    }
+
+    .noticias-header h2 {
+      font-family: 'Century Gothic', 'Montserrat', sans-serif;
+      font-size: 45px;
+      font-weight: 700;
+      line-height: 50px;
+      color: #101828;
+      margin-bottom: 16px;
+    }
+
+    .noticias-header p {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 18px;
+      color: #000;
+      line-height: 26px;
+    }
+
+    .noticias-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    .noticias-row {
+      display: flex;
+      gap: 24px;
+    }
+
+    .noticia-card {
+      border-radius: 32px;
+      padding: 32px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      position: relative;
+      overflow: hidden;
+      min-height: 280px;
+    }
+
+    .noticia-card--1 {
+      flex: none;
+      width: calc((200% - 24px) / 3);
+      background: url('assets/images/noticias/noticia1-bg.jpg') center/cover no-repeat;
+    }
+
+    .noticia-card--1::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(0, 0, 0, 0.6) 0%, rgba(0, 0, 0, 0.2) 50%, transparent 100%);
+      border-radius: 32px;
+    }
+
+    .noticia-card--1 .noticia-content {
+      position: relative;
+      z-index: 1;
+    }
+
+    .noticia-card--1 .noticia-icon-link {
+      position: absolute;
+      top: 32px;
+      right: 32px;
+      z-index: 1;
+    }
+
+    .noticia-card--1 .noticia-title {
+      font-family: 'Century Gothic', 'Montserrat', sans-serif;
+      font-size: 24px;
+      font-weight: 700;
+      color: #fff;
+      line-height: 31px;
+      margin-bottom: 12px;
+    }
+
+    .noticia-card--1 .noticia-author-info .noticia-author-name,
+    .noticia-card--1 .noticia-author-info .noticia-author-desc {
+      color: #fff;
+    }
+
+    .noticia-card--2 {
+      flex: 1;
+      min-width: 0;
+      background: #CC3E00;
+      justify-content: space-between;
+    }
+
+    .noticia-card--2 .noticia-quote {
+      font-family: 'Inter', sans-serif;
+      font-size: 20px;
+      color: #fff;
+      line-height: 32.5px;
+      letter-spacing: -0.45px;
+    }
+
+    .noticia-card--3 {
+      flex: 1;
+      background: #FFF2E5;
+      justify-content: space-between;
+    }
+
+    .noticia-card--3 .noticia-quote {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 18px;
+      color: #000;
+      line-height: 26px;
+    }
+
+    .noticia-card--4 {
+      flex: 1;
+      background: url('assets/images/noticias/noticia4-bg.jpg') center/cover no-repeat;
+    }
+
+    .noticia-card--4::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(0, 0, 0, 0.6) 0%, rgba(0, 0, 0, 0.2) 50%, transparent 100%);
+      border-radius: 32px;
+    }
+
+    .noticia-card--4 .noticia-content {
+      position: relative;
+      z-index: 1;
+    }
+
+    .noticia-card--4 .noticia-icon-link {
+      position: absolute;
+      top: 32px;
+      right: 32px;
+      z-index: 1;
+    }
+
+    .noticia-card--4 .noticia-title {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 18px;
+      color: #fff;
+      line-height: 26px;
+      margin-bottom: 12px;
+    }
+
+    .noticia-card--4 .noticia-author-info .noticia-author-name,
+    .noticia-card--4 .noticia-author-info .noticia-author-desc {
+      color: #fff;
+    }
+
+    .noticia-card--2 .noticia-quote em {
+      font-style: italic;
+      font-weight: 400;
+    }
+
+    .noticia-card--2 .noticia-quote em strong {
+      font-weight: 700;
+      font-style: italic;
+    }
+
+    .noticia-card--3 .noticia-quote strong,
+    .noticia-card--5 .noticia-quote strong {
+      font-weight: 600;
+    }
+
+    .noticia-card--5 {
+      flex: 1;
+      background: #fff;
+      justify-content: space-between;
+    }
+
+    .noticia-card--5 .noticia-quote {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 18px;
+      color: #000;
+      line-height: 26px;
+    }
+
+    .noticias-btn-wrap {
+      display: flex;
+      justify-content: center;
+      margin-top: 32px;
+    }
+
+    .noticias-btn-wrap .btn {
+      padding-left: 52px;
+      padding-right: 52px;
+    }
+
+    .noticia-icon-link {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.9);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .noticia-icon-link svg {
+      width: 20px;
+      height: 20px;
+    }
+
+    .noticia-author-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .noticia-avatar {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 16px;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+
+    .noticia-avatar--white {
+      background: #fff;
+      color: #FF4E00;
+    }
+
+    .noticia-avatar--orange {
+      background: #CC3E00;
+      color: #fff;
+    }
+
+    .noticia-author-info {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .noticia-author-name {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 18px;
+      font-weight: 600;
+      line-height: 24px;
+    }
+
+    .noticia-author-desc {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 14px;
+      font-weight: 400;
+      line-height: 22px;
+    }
+
+    .noticia-card--2 .noticia-author-name,
+    .noticia-card--2 .noticia-author-desc {
+      color: #fff;
+    }
+
+    .noticia-card--3 .noticia-author-name,
+    .noticia-card--3 .noticia-author-desc,
+    .noticia-card--5 .noticia-author-name,
+    .noticia-card--5 .noticia-author-desc {
+      color: #000;
+    }
+
+    /* ===== TESTIMONIALS SECTION ===== */
+    .section-testimonios {
+      position: relative;
+      max-width: 1240px;
+      margin: 140px auto 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 48px;
+      padding: 80px 0;
+      z-index: 1;
+    }
+
+    .testimonios-bg {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 1440px;
+      height: auto;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .testimonios-left {
+      flex: 0 0 596px;
+      max-width: 596px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .testimonios-left h2 {
+      font-family: 'Century Gothic', 'Poppins', 'Inter', sans-serif;
+      font-size: 56px;
+      font-weight: 700;
+      line-height: 68px;
+      color: #000;
+      margin: 0;
+    }
+
+    .testimonios-left h2 span {
+      color: #FF4E00;
+    }
+
+    .testimonios-left .section-subtitle {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 18px;
+      font-weight: 400;
+      line-height: 26px;
+      color: #000;
+      margin: 0;
+    }
+
+    .testimonios-right {
+      flex: 0 0 596px;
+      max-width: 596px;
+      position: relative;
+      z-index: 1;
+      height: 620px;
+      overflow: hidden;
+      -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 8%, black 92%, transparent 100%);
+      mask-image: linear-gradient(to bottom, transparent 0%, black 8%, black 92%, transparent 100%);
+    }
+
+    .testimonios-track {
+      display: flex;
+      flex-direction: column;
+      gap: 32px;
+      will-change: transform;
+    }
+
+    .testimonio-card {
+      background: #fff;
+      border-radius: 32px;
+      padding: 32px;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    .testimonio-card .stars {
+      display: flex;
+      gap: 4px;
+    }
+
+    .testimonio-card .stars svg {
+      width: 20px;
+      height: 20px;
+      fill: #FF4E00;
+    }
+
+    .testimonio-card blockquote {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 18px;
+      font-weight: 400;
+      line-height: 26px;
+      color: #000;
+      margin: 0;
+      font-style: normal;
+    }
+
+    .testimonio-card .author-row {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .testimonio-card .author-avatar {
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      object-fit: cover;
+      flex-shrink: 0;
+    }
+
+    .testimonio-card .author-info {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .testimonio-card .author-name {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 18px;
+      font-weight: 600;
+      line-height: 28px;
+      color: #000;
+    }
+
+    .testimonio-card .author-role {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 18px;
+      font-weight: 400;
+      line-height: 26px;
+      color: #000;
+    }
+
+    /* ===== COMMUNITY SECTION ===== */
+    .section-comunidad {
+      position: relative;
+      margin: 140px 100px 0;
+      border-radius: 32px;
+      text-align: center;
+      z-index: 1;
+      padding: 32px 0 0;
+    }
+
+    .section-comunidad h2 {
+      font-size: 72px;
+      font-weight: 700;
+      color: #000;
+      line-height: 1.1;
+      margin-bottom: 16px;
+    }
+
+    .section-comunidad h2 span {
+      color: #FF4E00;
+    }
+
+    .section-comunidad .comunidad-subtitle {
+      font-size: 18px;
+      color: #4A5565;
+      line-height: 1.5;
+      margin-bottom: 24px;
+    }
+
+    .section-comunidad .btn {
+      margin-bottom: 40px;
+    }
+
+    .community-gallery-wrapper {
+      position: relative;
+      margin: 0 -54px;
+      min-height: 460px;
+      overflow: visible;
+    }
+
+    .dog-trail {
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100vw;
+      height: 100%;
+      pointer-events: none;
+      z-index: 3;
+    }
+
+    .dog-trail,
+    .dog-trail svg {
+      overflow: visible;
+    }
+
+    .dog-trail path {
+      fill: none;
+      stroke: #FF4E00;
+      stroke-opacity: 0.35;
+      stroke-width: 28;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      vector-effect: non-scaling-stroke;
+    }
+
+    .community-gallery {
+      display: flex;
+      gap: 0;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+      padding: 30px 0;
+    }
+
+    .community-gallery .gallery-img {
+      border-radius: 32px;
+      object-fit: cover;
+      flex-shrink: 0;
+      will-change: transform;
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.14);
+      margin-left: -20px;
+      position: relative;
+      transition: z-index 0s;
+    }
+
+    .community-gallery .gallery-img:first-child {
+      margin-left: 0;
+    }
+
+    .community-gallery .gallery-img:nth-child(1) {
+      width: 244px;
+      height: 280px;
+      z-index: 2;
+    }
+
+    .community-gallery .gallery-img:nth-child(2) {
+      width: 244px;
+      height: 340px;
+      z-index: 4;
+    }
+
+    .community-gallery .gallery-img:nth-child(3) {
+      width: 244px;
+      height: 240px;
+      z-index: 2;
+    }
+
+    .community-gallery .gallery-img:nth-child(4) {
+      width: 244px;
+      height: 340px;
+      z-index: 4;
+    }
+
+    .community-gallery .gallery-img:nth-child(5) {
+      width: 244px;
+      height: 380px;
+      z-index: 2;
+    }
+
+    .btn .btn-icon {
+      display: inline-flex;
+      transition: transform 0.3s ease-out;
+    }
+
+    .btn:hover .btn-icon {
+      transform: translateX(4px);
+    }
+
+    .entrar-iz .btn--outline {
+      margin: 32px 32px 32px 0;
+    }
+
+    /* ===== HERO ===== */
+    .hero {
+      position: relative;
+      margin: 70px 100px 0;
+      display: flex;
+      align-items: flex-start;
+      gap: 52px;
+      z-index: 1;
+    }
+
+    .hero-content {
+      flex: 0 0 592px;
+      padding-top: 104px;
+      opacity: 0;
+      visibility: hidden;
+      transform: translateX(-80px);
+    }
+
+    .hero-content h1 {
+      font-size: 45px;
+      font-weight: 700;
+      line-height: 1.11;
+      color: #000;
+      margin-bottom: 32px;
+    }
+
+    .hero-content .subtitle {
+      font-size: 18px;
+      font-weight: 400;
+      color: #4A5565;
+      line-height: 1.44;
+      margin-bottom: 32px;
+    }
+
+    .hero-buttons {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 32px;
+    }
+
+    .hero-stats {
+      display: flex;
+      gap: 32px;
+      margin-bottom: 32px;
+    }
+
+    .stat .stat-number {
+      font-size: 28px;
+      font-weight: 700;
+      color: #FF4E00;
+    }
+
+    .stat .stat-label {
+      font-size: 14px;
+      font-weight: 400;
+      color: #565656;
+    }
+
+    .hero-dots {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .hero-dots .dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: #ffd4c2;
+    }
+
+    .hero-dots .dot.active {
+      width: 48px;
+      border-radius: 999px;
+      background: #FF4E00;
+    }
+
+    /* Hero Image */
+    .hero-image-wrapper {
+      flex: 0 0 596px;
+      width: 596px;
+      height: 596px;
+      border-radius: 28px;
+      border: 1px solid #f5f5f5;
+      overflow: visible;
+      position: relative;
+      opacity: 0;
+      visibility: hidden;
+      transform: translateX(80px);
+    }
+
+    .hero-image-wrapper img.hero-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 28px;
+    }
+
+    .floating-card {
+      position: absolute;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      background: #fff;
+      padding: 16px;
+      border-radius: 16px;
+      box-shadow: 0 8px 10px -6px rgba(0, 0, 0, 0.1), 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+    }
+
+    .floating-card .icon-box {
+      width: 40px;
+      height: 40px;
+      background: #FFEDD4;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .floating-card .icon-box svg {
+      width: 24px;
+      height: 24px;
+    }
+
+    .floating-card .card-text {
+      font-size: 16px;
+      font-weight: 600;
+      color: #101828;
+    }
+
+    .floating-card.top-right {
+      top: 36px;
+      right: 36px;
+    }
+
+    .floating-card.bottom-left {
+      bottom: 44px;
+      left: 31px;
+    }
+
+    /* Carousel arrows */
+    .carousel-arrows {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      left: -69px;
+      right: -69px;
+      display: flex;
+      justify-content: space-between;
+      z-index: 2;
+      opacity: 0;
+      visibility: hidden;
+    }
+
+    .arrow-btn {
+      width: 40px;
+      height: 40px;
+      background: #fff;
+      border-radius: 50%;
+      border: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+      transition: box-shadow 0.2s;
+    }
+
+    .arrow-btn:hover {
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+    }
+
+    .arrow-btn svg {
+      width: 20px;
+      height: 20px;
+      fill: none;
+    }
+
+    /* ===== SECTION: RAZONES (animar) ===== */
+    .razones-section {
+      position: relative;
+      margin: 140px 100px 0;
+      padding: 72px 0;
+      display: flex;
+      align-items: center;
+      gap: 52px;
+      z-index: 1;
+    }
+
+    /* Animation: entrar_iz (left to right) */
+    .entrar-iz {
+      flex: 0 0 739px;
+      opacity: 0;
+      transform: translateX(-120%);
+      transition: opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1), transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .entrar-iz.animate-in {
+      opacity: 1;
+      transform: translateX(0);
+    }
+
+    /* Animation: entrar_de — container is always visible, cards animate individually */
+    .entrar-de {
+      flex: 0 0 449px;
+      position: relative;
+      height: 397px;
+    }
+
+    .entrar-iz h2 {
+      font-size: 45px;
+      font-weight: 700;
+      color: #000;
+      margin-bottom: 32px;
+    }
+
+    .entrar-iz h2 span {
+      color: #FF4E00;
+    }
+
+    .entrar-iz .razones-subtitle {
+      font-size: 18px;
+      color: #4A5565;
+      line-height: 1.44;
+      margin-bottom: 0;
+    }
+
+    /* Reason Cards — absolute positioned like Figma */
+    .reason-card {
+      position: absolute;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 16px 24px;
+      border-radius: 56px;
+      color: #fff;
+      font-size: 18px;
+      font-weight: 600;
+      width: 438px;
+      height: 80px;
+      cursor: pointer;
+      will-change: transform;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+      transition: box-shadow 0.3s;
+    }
+
+    .reason-card:hover {
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+    }
+
+    .reason-card .reason-icon {
+      width: 48px;
+      height: 48px;
+      background: #fff;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .reason-card .reason-icon svg,
+    .reason-card .reason-icon img {
+      width: 24px;
+      height: 24px;
+    }
+
+    /* Figma positions — cards start off-screen right, Three.js controls transform */
+    .reason-card:nth-child(1) {
+      left: 2px;
+      top: 0px;
+      background: linear-gradient(135deg, #FF8A5C, #FF4E00);
+      z-index: 5;
+    }
+
+    .reason-card:nth-child(2) {
+      left: 0px;
+      top: 92px;
+      background: linear-gradient(135deg, #EDBA88, #F6A474);
+      z-index: 4;
+    }
+
+    .reason-card:nth-child(3) {
+      left: 6px;
+      top: 161px;
+      background: linear-gradient(135deg, #FF8A5C, #CC3E00);
+      z-index: 3;
+    }
+
+    .reason-card:nth-child(4) {
+      left: 7px;
+      top: 256px;
+      background: linear-gradient(135deg, #FF7575, #FF4E00);
+      z-index: 2;
+    }
+
+    .reason-card:nth-child(5) {
+      left: 7px;
+      top: 317px;
+      background: #FF8A5C;
+      z-index: 1;
+    }
+
+    /* ===== ABOUT / FAQ SECTION ===== */
+    .section-about {
+      max-width: 1240px;
+      margin: 140px auto 0;
+      padding: 50px 0;
+    }
+
+    .about-container {
+      display: flex;
+      align-items: center;
+      gap: 44px;
+      width: 100%;
+    }
+
+    .about-left {
+      flex: 0 0 588px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .about-left h2 {
+      font-family: 'Century Gothic', 'Montserrat', sans-serif;
+      font-size: 45px;
+      font-weight: 700;
+      line-height: 50px;
+      color: #000;
+    }
+
+    .about-left .about-desc {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 18px;
+      font-weight: 400;
+      line-height: 26px;
+      color: #000;
+    }
+
+    .about-left .about-sub {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 18px;
+      font-weight: 600;
+      line-height: 27px;
+      color: #565656;
+    }
+
+    .about-left .btn {
+      width: fit-content;
+    }
+
+    /* Right column: carousel */
+    .about-right {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 24px;
+      min-width: 0;
+    }
+
+    .about-stage {
+      position: relative;
+      width: 100%;
+      height: 280px;
+      overflow: hidden;
+    }
+
+    .about-card {
+      position: absolute;
+      top: 0;
+      left: 50%;
+      width: 328px;
+      background: #fff;
+      border-radius: 24px;
+      padding: 32px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      box-shadow: 0 4px 30px rgba(0, 0, 0, 0.08);
+      transform-origin: center center;
+      will-change: transform, opacity;
+      pointer-events: none;
+      user-select: none;
+      opacity: 0;
+      transform: translateX(calc(-50% + 60%)) scale(0.9) rotate(-3deg);
+    }
+
+    .about-card.active {
+      pointer-events: auto;
+      opacity: 1;
+      transform: translateX(-50%) scale(1) rotate(0deg);
+      transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .about-card.exit-left {
+      opacity: 0;
+      transform: translateX(calc(-50% - 40%)) scale(0.85) rotate(-5deg);
+      transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .about-card.enter-right {
+      opacity: 0;
+      transform: translateX(calc(-50% + 60%)) scale(0.9) rotate(-3deg);
+      transition: none;
+    }
+
+    .about-card.exit-right {
+      opacity: 0;
+      transform: translateX(calc(-50% + 60%)) scale(0.9) rotate(3deg);
+      transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .about-card.enter-left {
+      opacity: 0;
+      transform: translateX(calc(-50% - 40%)) scale(0.85) rotate(5deg);
+      transition: none;
+    }
+
+    .about-card-icon {
+      width: 56px;
+      height: 56px;
+      background: linear-gradient(180deg, #FF4E00 0%, #FF8A5C 100%);
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .about-card-icon svg {
+      width: 30px;
+      height: 30px;
+    }
+
+    .about-card h3 {
+      font-family: 'Century Gothic', 'Montserrat', sans-serif;
+      font-size: 20px;
+      font-weight: 700;
+      line-height: 22px;
+      color: #000;
+    }
+
+    .about-card p {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 16px;
+      font-weight: 400;
+      line-height: 22px;
+      color: #000;
+    }
+
+    /* Dots */
+    .about-dots {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .about-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 9999px;
+      background: #FFD4C2;
+      border: none;
+      cursor: pointer;
+      padding: 0;
+      transition: width 0.3s ease, background 0.3s ease;
+    }
+
+    .about-dot.active {
+      width: 48px;
+      background: #FF4E00;
+    }
+
+
+
+
+    /* ============================================
+       RESPONSIVE DESIGN
+       ============================================ */
+
+    /* ---- LAPTOP: 1024-1439px ---- */
+    @media (max-width: 1439px) {
+      .hero {
+        margin: 60px 60px 0;
+        gap: 40px;
+      }
+
+      .hero-content {
+        flex: 1 1 auto;
+        min-width: 380px;
+        padding-top: 80px;
+      }
+
+      .hero-content h1 {
+        font-size: 40px;
+      }
+
+      .hero-image-wrapper {
+        flex: 0 0 480px;
+        width: 480px;
+        height: 480px;
+      }
+
+      .hero-image-wrapper img.hero-img {
+        width: 480px;
+        height: 480px;
+      }
+
+      .carousel-arrows {
+        left: -50px;
+        right: -50px;
+      }
+
+      .razones-section {
+        margin: 100px 60px 0;
+        gap: 40px;
+      }
+
+      .entrar-iz {
+        flex: 1 1 auto;
+        min-width: 0;
+      }
+
+      .entrar-iz h2 {
+        font-size: 38px;
+      }
+
+      .entrar-de {
+        flex: 0 0 380px;
+      }
+
+      .reason-card {
+        width: 370px;
+      }
+
+      .products-sticky {
+        padding: 0 60px;
+      }
+
+      .panels-stack {
+        width: 100%;
+        max-width: 1100px;
+      }
+
+      .section-comunidad {
+        margin: 100px 60px 0;
+      }
+
+      .section-comunidad h2 {
+        font-size: 56px;
+      }
+
+      .section-testimonios {
+        gap: 40px;
+        padding: 80px 32px;
+      }
+
+      .testimonios-left {
+        flex: 1 1 auto;
+        max-width: none;
+      }
+
+      .testimonios-left h2 {
+        font-size: 44px;
+        line-height: 1.2;
+      }
+
+      .testimonios-right {
+        flex: 0 0 480px;
+        max-width: 480px;
+        height: 560px;
+      }
+
+      .section-noticias {
+        padding: 0 32px;
+        margin: 100px auto 0;
+      }
+
+      .noticias-header h2 {
+        font-size: 38px;
+      }
+
+      .noticia-card {
+        min-height: 260px;
+        padding: 28px;
+        border-radius: 24px;
+      }
+
+    }
+
+    /* ---- TABLET: 768-1023px ---- */
+    @media (max-width: 1023px) {
+      .flowing-line {
+        display: none;
+      }
+
+      /* About */
+      .about-container {
+        flex-direction: column;
+        gap: 40px;
+      }
+
+      .about-left {
+        flex: none;
+        width: 100%;
+        padding: 0 40px;
+      }
+
+      .about-left h2 {
+        font-size: 36px;
+        line-height: 42px;
+      }
+
+      .about-right {
+        width: 100%;
+      }
+
+      .about-card {
+        width: 300px;
+      }
+
+      /* Hero: stack vertically */
+      .hero {
+        margin: 40px 40px 0;
+        flex-direction: column;
+        align-items: center;
+        gap: 32px;
+      }
+
+      .hero-content {
+        flex: none;
+        width: 100%;
+        max-width: 600px;
+        padding-top: 0;
+        text-align: center;
+        min-width: 0;
+      }
+
+      .hero-content h1 {
+        font-size: 36px;
+      }
+
+      .hero-buttons {
+        justify-content: center;
+      }
+
+      .hero-stats {
+        justify-content: center;
+      }
+
+      .hero-dots {
+        justify-content: center;
+      }
+
+      .hero-image-wrapper {
+        flex: none;
+        width: 100%;
+        max-width: 480px;
+        height: auto;
+        aspect-ratio: 1;
+      }
+
+      .hero-image-wrapper img.hero-img {
+        width: 100%;
+        height: 100%;
+        aspect-ratio: 1;
+      }
+
+      .carousel-arrows {
+        left: -20px;
+        right: -20px;
+      }
+
+      .floating-card {
+        padding: 12px;
+      }
+
+      /* Razones: stack */
+      .razones-section {
+        margin: 80px 40px 0;
+        flex-direction: column;
+        gap: 32px;
+        align-items: center;
+      }
+
+      .entrar-iz {
+        flex: none;
+        width: 100%;
+        text-align: center;
+      }
+
+      .entrar-iz h2 {
+        font-size: 32px;
+      }
+
+      .entrar-de {
+        flex: none;
+        width: 100%;
+        max-width: 480px;
+        height: auto;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+      }
+
+      .reason-card {
+        position: relative !important;
+        width: 100% !important;
+        left: auto !important;
+        top: auto !important;
+        transform: none !important;
+      }
+
+      /* Products */
+      .section-products {
+        height: 200vh;
+      }
+
+      .products-sticky {
+        padding: 0 40px;
+      }
+
+      .products-header h2 {
+        font-size: 32px;
+      }
+
+      .panels-stack {
+        width: 100%;
+        height: 80vh;
+        max-height: 700px;
+      }
+
+      /* Community */
+      .section-comunidad {
+        margin: 80px 24px 0;
+        border-radius: 24px;
+      }
+
+      .section-comunidad h2 {
+        font-size: 40px;
+      }
+
+      .section-comunidad .comunidad-subtitle {
+        font-size: 16px;
+      }
+
+      .community-gallery-wrapper {
+        margin: 0 -24px;
+        min-height: 300px;
+      }
+
+      .community-gallery .gallery-img {
+        margin-left: -10px !important;
+        border-radius: 20px;
+      }
+
+      .community-gallery .gallery-img:nth-child(1) {
+        width: 160px !important;
+        height: 190px !important;
+      }
+
+      .community-gallery .gallery-img:nth-child(2) {
+        width: 160px !important;
+        height: 230px !important;
+      }
+
+      .community-gallery .gallery-img:nth-child(3) {
+        width: 160px !important;
+        height: 170px !important;
+      }
+
+      .community-gallery .gallery-img:nth-child(4) {
+        width: 160px !important;
+        height: 230px !important;
+      }
+
+      .community-gallery .gallery-img:nth-child(5) {
+        display: none;
+      }
+
+      .dog-trail {
+        display: none;
+      }
+
+      /* Testimonials: stack */
+      .section-testimonios {
+        flex-direction: column;
+        align-items: center;
+        gap: 32px;
+        padding: 60px 24px;
+      }
+
+      .testimonios-left {
+        flex: none;
+        max-width: 600px;
+        text-align: center;
+      }
+
+      .testimonios-left h2 {
+        font-size: 36px;
+        line-height: 1.2;
+      }
+
+      .testimonios-right {
+        flex: none;
+        width: 100%;
+        max-width: 500px;
+        height: 480px;
+      }
+
+      .testimonios-bg {
+        width: 100%;
+        opacity: 0.5;
+      }
+
+      /* Noticias */
+      .section-noticias {
+        margin: 80px auto 0;
+        padding: 0 24px;
+      }
+
+      .noticias-header h2 {
+        font-size: 32px;
+      }
+
+      .noticias-row {
+        flex-wrap: wrap;
+      }
+
+      .noticia-card--1 {
+        width: 100% !important;
+        flex: none !important;
+      }
+
+      .noticia-card--2 {
+        width: 100%;
+      }
+
+      .noticia-card {
+        min-height: 240px;
+        padding: 24px;
+        border-radius: 20px;
+      }
+
+    }
+
+    /* ---- MOBILE: max 767px ---- */
+    @media (max-width: 767px) {
+
+      /* Hero */
+      .hero {
+        margin: 24px 16px 0;
+        flex-direction: column;
+        gap: 24px;
+      }
+
+      .hero-content {
+        padding-top: 0;
+        text-align: center;
+        min-width: 0;
+      }
+
+      .hero-content h1 {
+        font-size: 28px;
+        margin-bottom: 20px;
+      }
+
+      .hero-content .subtitle {
+        font-size: 15px;
+        margin-bottom: 24px;
+      }
+
+      .hero-buttons {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 12px;
+      }
+
+      .hero-stats {
+        gap: 24px;
+        justify-content: center;
+      }
+
+      .stat .stat-number {
+        font-size: 22px;
+      }
+
+      .hero-image-wrapper {
+        width: 100%;
+        max-width: 360px;
+        height: auto;
+        aspect-ratio: 1;
+      }
+
+      .hero-image-wrapper img.hero-img {
+        width: 100%;
+        height: 100%;
+      }
+
+      .floating-card {
+        display: none;
+      }
+
+      .carousel-arrows {
+        display: none;
+      }
+
+      .hero-dots {
+        justify-content: center;
+      }
+
+
+      /* Razones */
+      .razones-section {
+        margin: 60px 16px 0;
+        flex-direction: column;
+        gap: 24px;
+      }
+
+      .entrar-iz h2 {
+        font-size: 26px;
+        margin-bottom: 16px;
+      }
+
+      .entrar-iz .razones-subtitle {
+        font-size: 15px;
+      }
+
+      .entrar-de {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+
+      .reason-card {
+        height: auto !important;
+        min-height: 64px;
+        padding: 12px 20px !important;
+        border-radius: 40px !important;
+        font-size: 15px;
+      }
+
+      .reason-card .reason-icon {
+        width: 40px;
+        height: 40px;
+      }
+
+      /* Products: horizontal scroll carousel on mobile */
+      .section-products {
+        height: auto;
+      }
+
+      .products-sticky {
+        position: relative;
+        height: auto;
+        padding: 60px 16px;
+      }
+
+      .products-header h2 {
+        font-size: 26px;
+      }
+
+      .products-header .products-subtitle {
+        font-size: 15px;
+      }
+
+      .products-tabs {
+        gap: 16px;
+        padding: 6px 8px;
+      }
+
+      .products-tab {
+        font-size: 13px;
+        padding: 0 16px;
+        height: 36px;
+      }
+
+      .panels-stack {
+        width: calc(100% + 32px);
+        margin-left: -16px;
+        height: auto;
+        display: flex;
+        flex-direction: row;
+        overflow-x: auto;
+        scroll-snap-type: x mandatory;
+        gap: 16px;
+        padding: 0 16px 16px;
+        -webkit-overflow-scrolling: touch;
+      }
+
+      /* Community */
+      .section-comunidad {
+        margin: 60px 16px 0;
+        border-radius: 20px;
+        padding: 24px 0 0;
+      }
+
+      .section-comunidad h2 {
+        font-size: 32px;
+      }
+
+      .section-comunidad h2 br {
+        display: none;
+      }
+
+      .section-comunidad .comunidad-subtitle {
+        font-size: 15px;
+      }
+
+      .section-comunidad .comunidad-subtitle br {
+        display: none;
+      }
+
+      .section-comunidad .btn {
+        font-size: 14px;
+        padding: 0 20px;
+        height: 40px;
+      }
+
+      .community-gallery-wrapper {
+        margin: 0;
+        min-height: auto;
+      }
+
+      .community-gallery {
+        overflow-x: auto;
+        justify-content: flex-start;
+        padding: 16px;
+        gap: 12px !important;
+        scroll-snap-type: x mandatory;
+        -webkit-overflow-scrolling: touch;
+      }
+
+      .community-gallery .gallery-img {
+        margin-left: 0 !important;
+        flex: 0 0 200px;
+        height: 240px !important;
+        width: 200px !important;
+        scroll-snap-align: start;
+        border-radius: 16px;
+      }
+
+      .community-gallery .gallery-img:nth-child(5) {
+        display: block;
+      }
+
+      .dog-trail {
+        display: none;
+      }
+
+      /* Testimonials */
+      .section-testimonios {
+        flex-direction: column;
+        padding: 48px 16px;
+        gap: 24px;
+      }
+
+      .testimonios-left {
+        text-align: center;
+      }
+
+      .testimonios-left h2 {
+        font-size: 28px;
+        line-height: 1.2;
+      }
+
+      .testimonios-left .section-subtitle {
+        font-size: 15px;
+      }
+
+      .testimonios-right {
+        width: 100%;
+        max-width: 100%;
+        height: 400px;
+      }
+
+      .testimonio-card {
+        padding: 24px;
+        border-radius: 20px;
+      }
+
+      .testimonio-card blockquote {
+        font-size: 15px;
+        line-height: 1.5;
+      }
+
+      .testimonio-card .author-avatar {
+        width: 44px;
+        height: 44px;
+      }
+
+      .testimonio-card .author-name {
+        font-size: 16px;
+      }
+
+      .testimonio-card .author-role {
+        font-size: 14px;
+      }
+
+      .testimonios-bg {
+        display: none;
+      }
+
+      .testimonios-track {
+        gap: 20px;
+      }
+
+      /* Noticias: single column */
+      .section-noticias {
+        margin: 60px auto 0;
+        padding: 0 16px;
+      }
+
+      .noticias-header h2 {
+        font-size: 28px;
+      }
+
+      .noticias-header p {
+        font-size: 15px;
+      }
+
+      .noticias-row {
+        flex-direction: column;
+      }
+
+      .noticia-card--1 {
+        width: 100% !important;
+      }
+
+      .noticia-card {
+        min-height: 200px;
+        padding: 20px;
+        border-radius: 16px;
+      }
+
+      .noticia-card--1 .noticia-title {
+        font-size: 20px;
+      }
+
+      .noticia-card--2 .noticia-quote,
+      .noticia-card--3 .noticia-quote,
+      .noticia-card--5 .noticia-quote {
+        font-size: 16px;
+      }
+
+      .noticia-avatar {
+        width: 40px;
+        height: 40px;
+      }
+
+      .noticia-author-name {
+        font-size: 16px;
+      }
+
+      .noticia-author-desc {
+        font-size: 13px;
+      }
+
+      .noticia-icon-link {
+        width: 44px;
+        height: 44px;
+      }
+
+      /* About */
+      .section-about {
+        margin: 60px 0 0;
+        padding: 32px 0;
+      }
+
+      .about-container {
+        flex-direction: column;
+        gap: 32px;
+      }
+
+      .about-left {
+        flex: none;
+        width: 100%;
+        padding: 0 16px;
+      }
+
+      .about-left h2 {
+        font-size: 28px;
+        line-height: 34px;
+      }
+
+      .about-left .about-desc {
+        font-size: 16px;
+        line-height: 24px;
+      }
+
+      .about-right {
+        width: 100%;
+      }
+
+      .about-card {
+        width: 270px;
+        padding: 24px;
+      }
+
+      .about-stage {
+        height: 260px;
+      }
+
+      .about-slider {
+        width: 200px;
+      }
+
+    }
+  </style>
+  <link rel="stylesheet" href="assets/css/header.css" />
+  <link rel="stylesheet" href="assets/css/button.css" />
+  <link rel="stylesheet" href="assets/css/product-card.css" />
+  <link rel="stylesheet" href="assets/css/footer.css" />
+</head>
+
+<body>
+  <!-- HEADER (global component) -->
+  <div id="header-root"></div>
+  <script src="assets/js/header.js"></script>
+
+  <div class="page-wrapper">
+    <!-- Flowing line -->
+    <div class="flowing-line" id="flowingLine">
+      <svg id="flowSvg" fill="none">
+        <defs>
+          <linearGradient id="flowGradient" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#FF4E00" stop-opacity="0" />
+            <stop offset="100%" stop-color="#FF4E00" stop-opacity="0.35" />
+          </linearGradient>
+        </defs>
+        <path id="flowPath" stroke="url(#flowGradient)" stroke-width="28" stroke-linecap="round"
+          stroke-linejoin="round" fill="none" />
+      </svg>
+    </div>
+
+    <!-- HERO -->
+    <section class="hero">
+      <div class="hero-content">
+        <h1>Tu seguro, reinventado para la era digital</h1>
+        <p class="subtitle">Protección inteligente, activación instantánea y respaldo 24/7. Todo desde tu móvil,
+          respaldado por Equidad Seguros.</p>
+        <div class="hero-buttons">
+          <a href="#" class="btn btn--primary btn--lg">Visita nuestros servicios <span class="btn-icon"><svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M7.5 15L12.5 10L7.5 5" stroke="#FFFFFF" stroke-width="1.667" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
+        </div>
+        <div class="hero-stats">
+          <div class="stat">
+            <div class="stat-number">50K+</div>
+            <div class="stat-label">Usuarios</div>
+          </div>
+          <div class="stat">
+            <div class="stat-number">98%</div>
+            <div class="stat-label">Satisfacción</div>
+          </div>
+          <div class="stat">
+            <div class="stat-number">24/7</div>
+            <div class="stat-label">Soporte</div>
+          </div>
+        </div>
+        <div class="hero-dots">
+          <div class="dot active"></div>
+          <div class="dot"></div>
+          <div class="dot"></div>
+        </div>
+      </div>
+
+      <div class="hero-image-wrapper">
+        <img class="hero-img" src="assets/images/hero/hero-image.png" alt="Protección para mascotas" />
+        <div class="floating-card top-right">
+          <div class="icon-box">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#FF4E00" stroke-width="2" stroke-linecap="round"
+              stroke-linejoin="round">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+            </svg>
+          </div>
+          <span class="card-text">Protección Total</span>
+        </div>
+        <div class="floating-card bottom-left">
+          <div class="icon-box">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#FF4E00" stroke-width="2" stroke-linecap="round"
+              stroke-linejoin="round">
+              <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" />
+            </svg>
+          </div>
+          <span class="card-text">Activación Instantánea</span>
+        </div>
+      </div>
+
+      <!-- Carousel arrows -->
+      <div class="carousel-arrows">
+        <button class="arrow-btn">
+          <svg viewBox="0 0 20 20">
+            <path d="M12.5 15L7.5 10L12.5 5" stroke="#FF4E00" stroke-width="1.667" stroke-linecap="round"
+              stroke-linejoin="round" />
+          </svg>
+        </button>
+        <button class="arrow-btn">
+          <svg viewBox="0 0 20 20">
+            <path d="M7.5 15L12.5 10L7.5 5" stroke="#FF4E00" stroke-width="1.667" stroke-linecap="round"
+              stroke-linejoin="round" />
+          </svg>
+        </button>
+      </div>
+    </section>
+
+    <!-- RAZONES SECTION (animar) -->
+    <section class="razones-section">
+      <!-- entrar_iz: entra de izquierda a derecha -->
+      <div class="entrar-iz">
+        <h2>Razones para <span>elegirnos</span></h2>
+        <p class="razones-subtitle">Somos diferentes porque ponemos tu tranquilidad primero, con tecnología que funciona
+          para ti</p>
+        <a href="#" class="btn btn--outline">Visita nuestros beneficios <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M7.5 15L12.5 10L7.5 5" stroke="#FF4E00" stroke-width="1.667" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      </div>
+
+      <!-- entrar_de: entra de derecha a izquierda -->
+      <div class="entrar-de">
+        <div class="reason-card">
+          <div class="reason-icon">
+            <img src="assets/icons/icon-digital.svg" alt="" />
+          </div>
+          <span>100% Digital</span>
+        </div>
+        <div class="reason-card">
+          <div class="reason-icon">
+            <img src="assets/icons/icon-accesible.svg" alt="" />
+          </div>
+          <span>Accesible</span>
+        </div>
+        <div class="reason-card">
+          <div class="reason-icon">
+            <img src="assets/icons/icon-bajo-costo.svg" alt="" />
+          </div>
+          <span>Bajo costo</span>
+        </div>
+        <div class="reason-card">
+          <div class="reason-icon">
+            <img src="assets/icons/icon-respaldo.svg" alt="" />
+          </div>
+          <span>Respaldo sólido</span>
+        </div>
+        <div class="reason-card">
+          <div class="reason-icon">
+            <img src="assets/icons/icon-transparencia.svg" alt="" />
+          </div>
+          <span>Total transparencia</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- NUESTROS SEGUROS — Stacked Sliding Cards -->
+    <section class="section-products" id="sectionProducts">
+      <div class="products-sticky">
+        <div class="products-header">
+          <h2>Nuestros Seguros</h2>
+          <p class="products-subtitle">Elige la protección perfecta para lo que más valoras</p>
+        </div>
+
+        <div class="products-tabs" id="productsTabs">
+          <button class="products-tab active" data-tab="0">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M7.917 18.333c-.82 0-1.51-.281-2.073-.844-.563-.562-.844-1.253-.844-2.073 0-.125.017-.222.052-.291a.098.098 0 00-.01-.167c-.042-.034-.097-.046-.167-.012-.07.035-.167.052-.292.052-.82 0-1.51-.281-2.073-.844C1.948 13.594 1.667 12.903 1.667 12.083c0-.82.281-1.51.843-2.073.563-.562 1.254-.843 2.073-.843.32 0 .612.042.875.125.264.083.514.208.75.375l3.459-3.459c-.167-.236-.292-.486-.375-.75a2.858 2.858 0 01-.125-.875c0-.82.281-1.51.844-2.073.562-.562 1.253-.843 2.073-.843.82 0 1.51.281 2.073.843.562.563.843 1.254.843 2.073 0 .125-.017.222-.052.292a.098.098 0 00.01.167c.042.042.097.045.167.01.07-.034.167-.051.292-.051.82 0 1.51.281 2.073.843.562.563.843 1.254.843 2.073 0 .82-.281 1.51-.843 2.073-.563.563-1.254.844-2.073.844-.32 0-.612-.042-.875-.125a2.934 2.934 0 01-.75-.375l-3.459 3.458c.167.236.292.486.375.75.084.264.125.556.125.875 0 .82-.281 1.51-.844 2.073-.562.563-1.253.844-2.073.844zm.896-2.02c.236-.237.354-.535.354-.896 0-.125-.018-.247-.053-.365a1.162 1.162 0 00-.156-.344 1.256 1.256 0 00-.292-1.073c.042-.382.208-.718.5-1.01l3.459-3.458c.291-.292.628-.459 1.01-.5.382-.042.74.055 1.073.291.111.07.226.121.344.156.118.035.24.052.365.052.361 0 .66-.118.896-.354.236-.236.354-.535.354-.896 0-.361-.118-.66-.354-.896-.236-.236-.535-.354-.896-.354-.486 0-.826-.024-1.02-.073-.195-.049-.397-.177-.605-.385-.208-.209-.337-.41-.385-.605-.049-.195-.073-.535-.073-1.021 0-.361-.118-.66-.354-.896a1.217 1.217 0 00-.896-.354c-.361 0-.66.118-.896.354-.236.236-.354.535-.354.896 0 .153.014.281.042.385.028.104.083.212.167.323.236.333.333.691.291 1.073-.041.382-.208.718-.5 1.01L7.375 10.833c-.292.292-.628.458-1.01.5-.382.042-.74-.056-1.073-.292a1.133 1.133 0 00-.344-.156 1.305 1.305 0 00-.365-.052c-.361 0-.66.118-.896.354-.236.236-.354.535-.354.896s.118.66.354.896c.236.236.535.354.896.354.486 0 .826.024 1.02.073.195.048.397.177.605.385.208.209.337.41.385.605.049.195.073.535.073 1.021 0 .361.118.66.354.896.236.236.535.354.896.354.361 0 .66-.118.896-.354z" fill="currentColor"/></svg>
+            Mascotas
+          </button>
+          <button class="products-tab" data-tab="1">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M5 20c-1.417 0-2.604-.479-3.563-1.438C.48 17.604 0 16.417 0 15c0-1.417.488-2.604 1.463-3.563C3.438 10.48 4.617 10 6 10c1.283 0 2.363.383 3.238 1.15.875.767 1.429 1.717 1.662 2.85h.65L9.75 9H8V7h5v2h-1.1l.35 1h4.8L15.6 6H13V4h1.6c.433 0 .82.117 1.163.35.341.233.587.55.737.95L18.2 9.95H19c1.383 0 2.563.488 3.538 1.463S24 13.567 24 14.95c0 1.4-.483 2.592-1.45 3.575C21.583 19.508 20.4 20 19 20c-1.2 0-2.254-.375-3.163-1.125-.908-.75-1.487-1.708-1.737-2.875H9.9c-.233 1.15-.8 2.104-1.7 2.863-.9.758-1.967 1.137-3.2 1.137zM5 18c.683 0 1.27-.188 1.763-.563.491-.375.838-.854 1.037-1.437H5v-2h2.8c-.2-.6-.546-1.083-1.038-1.45A2.786 2.786 0 005 12c-.85 0-1.563.288-2.138.863S2 14.15 2 15c0 .833.288 1.542.863 2.125S4.15 18 5 18zm7.7-4h1.4c.083-.383.196-.742.338-1.075.141-.333.329-.642.562-.925h-3.05l.75 2zM19 18c.85 0 1.563-.292 2.138-.875S22 15.833 22 15c0-.85-.288-1.563-.863-2.138S19.85 12 19 12h-.1l1 2.65-1.9.7-.95-2.65c-.333.283-.592.617-.775 1-.183.383-.275.817-.275 1.3 0 .833.288 1.542.863 2.125S18.15 18 19 18z" fill="currentColor"/></svg>
+            Bicicletas
+          </button>
+        </div>
+
+        <div class="panels-stack" id="panelsStack">
+          <!-- Panel 1: Mascotas -->
+          <div class="product-panel product-panel--mascotas" data-panel="0">
+            <img src="assets/images/products/product-mascotas-img.png" class="product-image" alt="Seguro para Mascotas" />
+            <div class="product-card">
+              <div class="pc-header">
+                <div class="pc-icon"><svg viewBox="0 0 40 40" fill="none"><path d="M20 36s13.3-6.7 13.3-16.7V8.3L20 2.7 6.7 8.3v11c0 10 13.3 16.7 13.3 16.7z" stroke="#7E60FE" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+                <span class="pc-chip">Popular</span>
+              </div>
+              <div class="pc-content">
+                <h3>Seguro para Mascotas</h3>
+                <p class="pc-desc">Cuida de tu mejor amigo con la mejor cobertura</p>
+                <div class="pc-features">
+                  <div class="pc-feature">
+                    <div class="pc-check"><svg viewBox="0 0 14 14" fill="none"><path d="M2 7l3.5 3.5L12 4" stroke="#7E60FE" stroke-width="1.56" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+                    Consultas veterinarias ilimitadas
+                  </div>
+                  <div class="pc-feature">
+                    <div class="pc-check"><svg viewBox="0 0 14 14" fill="none"><path d="M2 7l3.5 3.5L12 4" stroke="#7E60FE" stroke-width="1.56" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+                    Cirugías y hospitalización
+                  </div>
+                  <div class="pc-feature">
+                    <div class="pc-check"><svg viewBox="0 0 14 14" fill="none"><path d="M2 7l3.5 3.5L12 4" stroke="#7E60FE" stroke-width="1.56" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+                    Vacunas y tratamientos preventivos
+                  </div>
+                  <div class="pc-feature">
+                    <div class="pc-check"><svg viewBox="0 0 14 14" fill="none"><path d="M2 7l3.5 3.5L12 4" stroke="#7E60FE" stroke-width="1.56" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+                    Medicamentos cubiertos al 100%
+                  </div>
+                  <div class="pc-feature">
+                    <div class="pc-check"><svg viewBox="0 0 14 14" fill="none"><path d="M2 7l3.5 3.5L12 4" stroke="#7E60FE" stroke-width="1.56" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+                    Responsabilidad civil incluida
+                  </div>
+                </div>
+                <a href="#" class="btn btn--primary pc-btn">Cotizar ahora</a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Panel 2: Bicicletas -->
+          <div class="product-panel product-panel--bicicletas" data-panel="1">
+            <img src="assets/images/products/product-bicicletas-img.png" class="product-image" alt="Seguro para Bicicletas" />
+            <div class="product-card">
+              <div class="pc-header">
+                <div class="pc-icon"><svg viewBox="0 0 40 40" fill="none"><path d="M20 36s13.3-6.7 13.3-16.7V8.3L20 2.7 6.7 8.3v11c0 10 13.3 16.7 13.3 16.7z" stroke="#1E3D8B" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+                <span class="pc-chip">Popular</span>
+              </div>
+              <div class="pc-content">
+                <h3>Seguro para Bicicletas</h3>
+                <p class="pc-desc">Cuida de tu mejor amigo con la mejor cobertura</p>
+                <div class="pc-features">
+                  <div class="pc-feature">
+                    <div class="pc-check"><svg viewBox="0 0 14 14" fill="none"><path d="M2 7l3.5 3.5L12 4" stroke="#1E3D8B" stroke-width="1.56" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+                    Consultas veterinarias ilimitadas
+                  </div>
+                  <div class="pc-feature">
+                    <div class="pc-check"><svg viewBox="0 0 14 14" fill="none"><path d="M2 7l3.5 3.5L12 4" stroke="#1E3D8B" stroke-width="1.56" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+                    Cirugías y hospitalización
+                  </div>
+                  <div class="pc-feature">
+                    <div class="pc-check"><svg viewBox="0 0 14 14" fill="none"><path d="M2 7l3.5 3.5L12 4" stroke="#1E3D8B" stroke-width="1.56" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+                    Vacunas y tratamientos preventivos
+                  </div>
+                  <div class="pc-feature">
+                    <div class="pc-check"><svg viewBox="0 0 14 14" fill="none"><path d="M2 7l3.5 3.5L12 4" stroke="#1E3D8B" stroke-width="1.56" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+                    Medicamentos cubiertos al 100%
+                  </div>
+                  <div class="pc-feature">
+                    <div class="pc-check"><svg viewBox="0 0 14 14" fill="none"><path d="M2 7l3.5 3.5L12 4" stroke="#1E3D8B" stroke-width="1.56" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+                    Responsabilidad civil incluida
+                  </div>
+                </div>
+                <a href="#" class="btn btn--primary pc-btn">Cotizar ahora</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- COMUNIDAD -->
+    <section class="section-comunidad">
+      <h2>¿Listo para la <span>revolución</span><br>del seguro?</h2>
+      <p class="comunidad-subtitle">Únete a los miles de colombianos que ya protegen<br>lo que aman de forma inteligente
+      </p>
+      <a href="#" class="btn btn--secondary">
+        Ir a comunidad
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+          <path d="M7.5 15L12.5 10L7.5 5" stroke="currentColor" stroke-width="1.667" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+      </a>
+      <div class="community-gallery-wrapper">
+        <svg class="dog-trail" viewBox="0 0 1200 400" preserveAspectRatio="none">
+          <path class="trail-path"
+            d="M-400,340 C-60,310 20,100 140,90 C260,80 300,310 400,280 C500,250 500,60 600,80 C700,100 720,320 820,280 C920,240 920,50 1060,90 C1200,130 1280,300 1650,240" />
+        </svg>
+        <div class="community-gallery">
+          <img src="assets/images/community/community-1.png" class="gallery-img" alt="" />
+          <img src="assets/images/community/community-2.png" class="gallery-img" alt="" />
+          <img src="assets/images/community/community-3.png" class="gallery-img" alt="" />
+          <img src="assets/images/community/community-4.png" class="gallery-img" alt="" />
+          <img src="assets/images/community/community-5.png" class="gallery-img" alt="" />
+        </div>
+      </div>
+    </section>
+
+    <!-- TESTIMONIOS -->
+    <section class="section-testimonios">
+      <img src="assets/images/testimonials/testimonials-bg.svg" class="testimonios-bg" alt="" />
+      <div class="testimonios-left">
+        <h2>Lo que dicen nuestros <span>clientes</span></h2>
+        <p class="section-subtitle">Miles de dueños de mascotas confían en Qbrete para proteger a sus compañeros peludos
+        </p>
+      </div>
+      <div class="testimonios-right">
+        <div class="testimonios-track">
+          <div class="testimonio-card">
+            <div class="stars">
+              <svg viewBox="0 0 20 20">
+                <path
+                  d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1.5 1.5 0 0 0 1.387.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1.5 1.5 0 0 0-.543 1.671l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1.5 1.5 0 0 0-1.176 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1.5 1.5 0 0 0-.543-1.67L2.98 8.72c-.783-.57-.369-1.81.588-1.81h3.461a1.5 1.5 0 0 0 1.388-.69l1.07-3.292z" />
+              </svg>
+              <svg viewBox="0 0 20 20">
+                <path
+                  d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1.5 1.5 0 0 0 1.387.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1.5 1.5 0 0 0-.543 1.671l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1.5 1.5 0 0 0-1.176 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1.5 1.5 0 0 0-.543-1.67L2.98 8.72c-.783-.57-.369-1.81.588-1.81h3.461a1.5 1.5 0 0 0 1.388-.69l1.07-3.292z" />
+              </svg>
+              <svg viewBox="0 0 20 20">
+                <path
+                  d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1.5 1.5 0 0 0 1.387.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1.5 1.5 0 0 0-.543 1.671l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1.5 1.5 0 0 0-1.176 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1.5 1.5 0 0 0-.543-1.67L2.98 8.72c-.783-.57-.369-1.81.588-1.81h3.461a1.5 1.5 0 0 0 1.388-.69l1.07-3.292z" />
+              </svg>
+              <svg viewBox="0 0 20 20">
+                <path
+                  d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1.5 1.5 0 0 0 1.387.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1.5 1.5 0 0 0-.543 1.671l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1.5 1.5 0 0 0-1.176 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1.5 1.5 0 0 0-.543-1.67L2.98 8.72c-.783-.57-.369-1.81.588-1.81h3.461a1.5 1.5 0 0 0 1.388-.69l1.07-3.292z" />
+              </svg>
+              <svg viewBox="0 0 20 20">
+                <path
+                  d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1.5 1.5 0 0 0 1.387.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1.5 1.5 0 0 0-.543 1.671l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1.5 1.5 0 0 0-1.176 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1.5 1.5 0 0 0-.543-1.67L2.98 8.72c-.783-.57-.369-1.81.588-1.81h3.461a1.5 1.5 0 0 0 1.388-.69l1.07-3.292z" />
+              </svg>
+            </div>
+            <blockquote>"Qbrete me salvó cuando Max necesitó una cirugía de emergencia. El proceso fue rapidísimo y el
+              soporte 24/7 realmente funciona. ¡100% recomendado!"</blockquote>
+            <div class="author-row">
+              <img src="assets/images/testimonials/avatar-maria.png" class="author-avatar" alt="María González" />
+              <div class="author-info"><span class="author-name">María González</span><span class="author-role">Dueña de
+                  Max</span></div>
+            </div>
+          </div>
+          <div class="testimonio-card">
+            <div class="stars"><svg viewBox="0 0 20 20">
+                <path
+                  d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1.5 1.5 0 0 0 1.387.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1.5 1.5 0 0 0-.543 1.671l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1.5 1.5 0 0 0-1.176 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1.5 1.5 0 0 0-.543-1.67L2.98 8.72c-.783-.57-.369-1.81.588-1.81h3.461a1.5 1.5 0 0 0 1.388-.69l1.07-3.292z" />
+              </svg><svg viewBox="0 0 20 20">
+                <path
+                  d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1.5 1.5 0 0 0 1.387.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1.5 1.5 0 0 0-.543 1.671l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1.5 1.5 0 0 0-1.176 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1.5 1.5 0 0 0-.543-1.67L2.98 8.72c-.783-.57-.369-1.81.588-1.81h3.461a1.5 1.5 0 0 0 1.388-.69l1.07-3.292z" />
+              </svg><svg viewBox="0 0 20 20">
+                <path
+                  d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1.5 1.5 0 0 0 1.387.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1.5 1.5 0 0 0-.543 1.671l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1.5 1.5 0 0 0-1.176 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1.5 1.5 0 0 0-.543-1.67L2.98 8.72c-.783-.57-.369-1.81.588-1.81h3.461a1.5 1.5 0 0 0 1.388-.69l1.07-3.292z" />
+              </svg><svg viewBox="0 0 20 20">
+                <path
+                  d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1.5 1.5 0 0 0 1.387.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1.5 1.5 0 0 0-.543 1.671l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1.5 1.5 0 0 0-1.176 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1.5 1.5 0 0 0-.543-1.67L2.98 8.72c-.783-.57-.369-1.81.588-1.81h3.461a1.5 1.5 0 0 0 1.388-.69l1.07-3.292z" />
+              </svg><svg viewBox="0 0 20 20">
+                <path
+                  d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1.5 1.5 0 0 0 1.387.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1.5 1.5 0 0 0-.543 1.671l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1.5 1.5 0 0 0-1.176 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1.5 1.5 0 0 0-.543-1.67L2.98 8.72c-.783-.57-.369-1.81.588-1.81h3.461a1.5 1.5 0 0 0 1.388-.69l1.07-3.292z" />
+              </svg></div>
+            <blockquote>"La activación fue instantánea y el precio es muy competitivo. Rocky está protegido y yo estoy
+              tranquilo. Excelente servicio."</blockquote>
+            <div class="author-row">
+              <img src="assets/images/testimonials/avatar-carlos.png" class="author-avatar" alt="Carlos Mendoza" />
+              <div class="author-info"><span class="author-name">Carlos Mendoza</span><span class="author-role">Dueño de
+                  Rocky</span></div>
+            </div>
+          </div>
+          <div class="testimonio-card">
+            <div class="stars"><svg viewBox="0 0 20 20">
+                <path
+                  d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1.5 1.5 0 0 0 1.387.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1.5 1.5 0 0 0-.543 1.671l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1.5 1.5 0 0 0-1.176 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1.5 1.5 0 0 0-.543-1.67L2.98 8.72c-.783-.57-.369-1.81.588-1.81h3.461a1.5 1.5 0 0 0 1.388-.69l1.07-3.292z" />
+              </svg><svg viewBox="0 0 20 20">
+                <path
+                  d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1.5 1.5 0 0 0 1.387.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1.5 1.5 0 0 0-.543 1.671l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1.5 1.5 0 0 0-1.176 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1.5 1.5 0 0 0-.543-1.67L2.98 8.72c-.783-.57-.369-1.81.588-1.81h3.461a1.5 1.5 0 0 0 1.388-.69l1.07-3.292z" />
+              </svg><svg viewBox="0 0 20 20">
+                <path
+                  d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1.5 1.5 0 0 0 1.387.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1.5 1.5 0 0 0-.543 1.671l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1.5 1.5 0 0 0-1.176 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1.5 1.5 0 0 0-.543-1.67L2.98 8.72c-.783-.57-.369-1.81.588-1.81h3.461a1.5 1.5 0 0 0 1.388-.69l1.07-3.292z" />
+              </svg><svg viewBox="0 0 20 20">
+                <path
+                  d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1.5 1.5 0 0 0 1.387.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1.5 1.5 0 0 0-.543 1.671l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1.5 1.5 0 0 0-1.176 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1.5 1.5 0 0 0-.543-1.67L2.98 8.72c-.783-.57-.369-1.81.588-1.81h3.461a1.5 1.5 0 0 0 1.388-.69l1.07-3.292z" />
+              </svg><svg viewBox="0 0 20 20">
+                <path
+                  d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1.5 1.5 0 0 0 1.387.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1.5 1.5 0 0 0-.543 1.671l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1.5 1.5 0 0 0-1.176 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1.5 1.5 0 0 0-.543-1.67L2.98 8.72c-.783-.57-.369-1.81.588-1.81h3.461a1.5 1.5 0 0 0 1.388-.69l1.07-3.292z" />
+              </svg></div>
+            <blockquote>"Tengo dos mascotas aseguradas y la app hace todo súper fácil. Me encanta poder gestionar todo
+              desde mi móvil sin complicaciones."</blockquote>
+            <div class="author-row">
+              <img src="assets/images/testimonials/avatar-andrea.png" class="author-avatar" alt="Andrea Ramírez" />
+              <div class="author-info"><span class="author-name">Andrea Ramírez</span><span class="author-role">Dueña de
+                  Luna y Simba</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- NOTICIAS -->
+    <section class="section-noticias">
+      <div class="noticias-header">
+        <h2>Las noticias que nos <span style="color: #FF4E00">Qbren</span></h2>
+        <p>Noticias reales de impactan a nuestros comunidad</p>
+      </div>
+      <div class="noticias-grid">
+        <div class="noticias-row">
+          <div class="noticia-card noticia-card--1">
+            <a href="#" class="noticia-icon-link"><svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                <path d="M4.166 10H15.833" stroke="#EA580C" stroke-width="1.667" stroke-linecap="round"
+                  stroke-linejoin="round" />
+                <path d="M10 4.166L15.833 10 10 15.833" stroke="#EA580C" stroke-width="1.667" stroke-linecap="round"
+                  stroke-linejoin="round" />
+              </svg></a>
+            <div class="noticia-content">
+              <p class="noticia-title">"Mi perro tuvo una emergencia un domingo y Qbrete me atendió al instante.
+                Salvaron su vida."</p>
+              <div class="noticia-author-info">
+                <span class="noticia-author-name">REVISTA SEMANA</span>
+                <span class="noticia-author-desc">Autor: Alvaro Uribe Velez</span>
+              </div>
+            </div>
+          </div>
+          <div class="noticia-card noticia-card--2">
+            <p class="noticia-quote"><em>"La tranquilidad de saber que mi familia peluda está protegida no tiene precio. <strong>Qbrete es la mejor inversión</strong> que he hecho."</em></p>
+            <div class="noticia-author-info">
+              <span class="noticia-author-name">LA SILLA VACIA</span>
+              <span class="noticia-author-desc">Autor: Lina Cabrera</span>
+            </div>
+          </div>
+        </div>
+        <div class="noticias-row">
+          <div class="noticia-card noticia-card--3">
+            <p class="noticia-quote"><strong>Refugio</strong> con más de 70 animales, muchos viejitos y enfermos, pide apoyo por falta de recursos</p>
+            <div class="noticia-author-info">
+              <span class="noticia-author-name">El espectador</span>
+              <span class="noticia-author-desc">Autor: Edinson Castañeda</span>
+            </div>
+          </div>
+          <div class="noticia-card noticia-card--4">
+            <a href="#" class="noticia-icon-link"><svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                <path d="M4.166 10H15.833" stroke="#EA580C" stroke-width="1.667" stroke-linecap="round"
+                  stroke-linejoin="round" />
+                <path d="M10 4.166L15.833 10 10 15.833" stroke="#EA580C" stroke-width="1.667" stroke-linecap="round"
+                  stroke-linejoin="round" />
+              </svg></a>
+            <div class="noticia-content">
+              <p class="noticia-title">"Activé mi seguro en 5 minutos desde mi celular. Todo súper fácil y rápido."</p>
+              <div class="noticia-author-info">
+                <span class="noticia-author-name">ECONOMIC</span>
+                <span class="noticia-author-desc">Autor: Edwin Castañeda</span>
+              </div>
+            </div>
+          </div>
+          <div class="noticia-card noticia-card--5">
+            <p class="noticia-quote"><strong>Donar tiempo para ayudar</strong> a perros y gatos sin hogar: el valor del voluntariado animal</p>
+            <div class="noticia-author-info">
+              <span class="noticia-author-name">El TIEMPO</span>
+              <span class="noticia-author-desc">Autor: Valeria Barrera Serrano</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="noticias-btn-wrap">
+        <a href="#" class="btn btn--secondary">
+          Ver más noticias
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+            <path d="M6 4l4 4-4 4" stroke="currentColor" stroke-width="1.667" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+        </a>
+      </div>
+    </section>
+
+    <!-- ABOUT / FAQ -->
+    <section class="section-about" id="sectionAbout">
+      <div class="about-container">
+        <div class="about-left">
+          <h2>Todo lo que necesitas <span style="color: #FF4E00">saber</span></h2>
+          <p class="about-desc">Resolvemos tus dudas sobre Qbrete, la plataforma digital de La Equidad Seguros que te protege de manera fácil, rápida y segura</p>
+          <p class="about-sub">¿No Qbrimos tus inquitudes ?</p>
+          <a href="#" class="btn btn--primary">
+            Ver más preguntas aquí
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M7.5 15L12.5 10L7.5 5" stroke="currentColor" stroke-width="1.667" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+        </div>
+        <div class="about-right">
+          <div class="about-stage" id="aboutStage">
+            <div class="about-card" data-index="0">
+              <div class="about-card-icon">
+                <svg width="30" height="30" viewBox="0 0 30 30" fill="none"><path d="M15 1.25L3.75 6.25V13.75C3.75 20.6875 8.55 27.175 15 28.75C21.45 27.175 26.25 20.6875 26.25 13.75V6.25L15 1.25ZM23.75 13.75C23.75 16.0625 23.1125 18.3125 22.025 20.2625L20.2125 18.45C21.825 16.025 21.55 12.725 19.4125 10.5875C16.975 8.15 13.0125 8.15 10.575 10.5875C8.1375 13.025 8.1375 16.9875 10.575 19.425C12.7125 21.5625 16.0125 21.825 18.4375 20.225L20.5875 22.375C19.1 24.15 17.175 25.5125 15 26.175C9.975 24.6125 6.25 19.4 6.25 13.75V7.875L15 3.9875L23.75 7.875V13.75ZM15 18.75C12.925 18.75 11.25 17.075 11.25 15C11.25 12.925 12.925 11.25 15 11.25C17.075 11.25 18.75 12.925 18.75 15C18.75 17.075 17.075 18.75 15 18.75Z" fill="white"/></svg>
+              </div>
+              <h3>¿Qué es Qbrete?</h3>
+              <p>Qbrete, es una tienda virtual de La Equidad Seguros, ofrece protección digital para ti y tu familia.</p>
+            </div>
+            <div class="about-card" data-index="1">
+              <div class="about-card-icon">
+                <svg width="30" height="30" viewBox="0 0 30 30" fill="none"><path d="M15 2.5C8.1 2.5 2.5 8.1 2.5 15S8.1 27.5 15 27.5 27.5 21.9 27.5 15 21.9 2.5 15 2.5zm1.25 21.25h-2.5v-2.5h2.5v2.5zm2.588-9.688l-1.125 1.15C16.85 16.1 16.25 16.875 16.25 18.75h-2.5v-.625c0-1.375.6-2.625 1.463-3.588l1.55-1.575A2.468 2.468 0 0017.5 11.25c0-1.375-1.125-2.5-2.5-2.5s-2.5 1.125-2.5 2.5H10c0-2.763 2.238-5 5-5s5 2.237 5 5c0 1.1-.45 2.1-1.163 2.813z" fill="white"/></svg>
+              </div>
+              <h3>¿Cómo funciona?</h3>
+              <p>Elige tu seguro, cotiza en segundos y activa tu protección 100% digital desde tu celular.</p>
+            </div>
+            <div class="about-card" data-index="2">
+              <div class="about-card-icon">
+                <svg width="30" height="30" viewBox="0 0 30 30" fill="none"><path d="M15 2.5C8.1 2.5 2.5 8.1 2.5 15S8.1 27.5 15 27.5 27.5 21.9 27.5 15 21.9 2.5 15 2.5zm-1.25 18.75L7.5 15l1.763-1.762 4.487 4.475 9.487-9.488L25 10l-11.25 11.25z" fill="white"/></svg>
+              </div>
+              <h3>¿Quién me respalda?</h3>
+              <p>Qbrete está respaldado por La Equidad Seguros, una aseguradora con más de 50 años de experiencia.</p>
+            </div>
+          </div>
+          <div class="about-dots" id="aboutDots">
+            <button class="about-dot active" data-slide="0"></button>
+            <button class="about-dot" data-slide="1"></button>
+            <button class="about-dot" data-slide="2"></button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </div><!-- end .page-wrapper -->
+
+  <!-- FOOTER -->
+  <div class="footer-wrapper">
+    <svg class="footer-curve" viewBox="0 0 1440 100" preserveAspectRatio="none" fill="#3A3A3A">
+      <ellipse cx="720" cy="100" rx="1089" ry="72" />
+    </svg>
+    <footer class="footer">
+      <div class="footer-inner">
+        <div class="footer-top">
+          <div class="footer-brand">
+            <div class="brand-logos">
+              <img src="assets/logos/logo-qbrete-white.svg" alt="Qbrete" class="brand-logo" />
+              <span class="brand-divider" aria-hidden="true"></span>
+              <img src="assets/images/footer/capa-1.svg" alt="La Equidad Seguros" class="brand-logo-partner" />
+            </div>
+            <p class="brand-desc">Tu seguro digital para mascotas. Protección integral con tecnología y amor. Respaldado por La <strong>Equidad Seguros.</strong></p>
+            <div class="footer-socials">
+              <a href="#" class="footer-social" aria-label="Facebook"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" /></svg></a>
+              <a href="#" class="footer-social" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" /><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" /><line x1="17.5" y1="6.5" x2="17.51" y2="6.5" /></svg></a>
+              <a href="#" class="footer-social" aria-label="Twitter"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z" /></svg></a>
+            </div>
+          </div>
+          <div class="footer-columns">
+            <div class="footer-col">
+              <div class="col-title">Accesos directos</div>
+              <div class="col-links">
+                <a href="#" class="col-link">Inicio</a>
+                <a href="#" class="col-link">Mi comunidad</a>
+                <a href="#" class="col-link">Beneficios</a>
+                <a href="#" class="col-link">PQRS</a>
+                <a href="#" class="col-link">Reporta tu siniestro</a>
+              </div>
+            </div>
+            <div class="footer-col">
+              <div class="col-title">Servicios</div>
+              <div class="col-links">
+                <a href="#" class="col-link">Seguro para Mascotas</a>
+                <a href="#" class="col-link">Seguro para Bicicletas</a>
+              </div>
+            </div>
+            <div class="footer-col">
+              <div class="col-title">Legal</div>
+              <div class="col-links">
+                <a href="#" class="col-link">Términos y condiciones</a>
+                <a href="#" class="col-link">Políticas de privacidad</a>
+                <a href="#" class="col-link">Políticas de cookies</a>
+                <a href="#" class="col-link">Aviso legal</a>
+              </div>
+            </div>
+            <div class="footer-col">
+              <div class="col-title">Contacto</div>
+              <div class="col-links">
+                <div class="footer-contact-item">
+                  <div class="footer-contact-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" /><polyline points="22,6 12,13 2,6" /></svg></div>
+                  <a href="mailto:info@qbrete.com" class="col-link">info@qbrete.com</a>
+                </div>
+                <div class="footer-contact-item">
+                  <div class="footer-contact-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" /></svg></div>
+                  <a href="tel:+570000000000" class="col-link">+57 000 000 000</a>
+                </div>
+                <div class="footer-contact-item">
+                  <div class="footer-contact-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" /><circle cx="12" cy="10" r="3" /></svg></div>
+                  <span class="col-link">Bogotá, Colombia</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <p class="footer-copyright">&copy; 2026 Qbrete. Todos los derechos reservados. PARA linktic 2024</p>
+        </div>
+        <div class="footer-vigilado">
+          <img src="assets/images/footer/vigilado.png" alt="Vigilado Superintendencia Financiera" />
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <!-- Three.js for physics -->
+  <script type="importmap">
+    { "imports": { "three": "https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js" } }
+  </script>
+  <script type="module">
+    import * as THREE from 'three';
+
+    if (window.innerWidth < 1024) {
+      // On tablet/mobile, skip physics — cards are laid out by CSS flex
+      const cards = document.querySelectorAll('.reason-card');
+      cards.forEach(c => { c.style.opacity = '1'; });
+      // Also trigger entrar-iz animation on scroll
+      const entrarIzMobile = document.querySelector('.entrar-iz');
+      const sectionMobile = document.querySelector('.razones-section');
+      if (entrarIzMobile && sectionMobile) {
+        const mobileObs = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              entrarIzMobile.classList.add('animate-in');
+              mobileObs.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.1 });
+        mobileObs.observe(sectionMobile);
+      }
+    } else {
+      // ===== SCROLL ANIMATION =====
+      const section = document.querySelector('.razones-section');
+      const entrarIz = document.querySelector('.entrar-iz');
+      const entrarDeEl = document.querySelector('.entrar-de');
+      const cards = document.querySelectorAll('.reason-card');
+
+      // ===== REST STATES from Figma =====
+      const restStates = [
+        { x: 2, y: 0, rot: 0 },
+        { x: 0, y: 92, rot: 2.75 },
+        { x: 6, y: 161, rot: -0.37 },
+        { x: 7, y: 256, rot: 3.79 },
+        { x: 7, y: 317, rot: 0.27 },
+      ];
+
+      // ===== ENTRANCE STATE =====
+      // Cards start 700px to the right, with 0 rotation
+      const ENTRANCE_OFFSET = 180;
+      let entranceTriggered = false;
+      let entrancePhase = true;     // true = cards are still flying in
+      let physicsActive = false;    // true = hover physics enabled
+
+      // ===== PHYSICS BODIES =====
+      const bodies = restStates.map((rest, i) => ({
+        // Start off-screen to the right, at the correct Y but no rotation
+        pos: new THREE.Vector2(rest.x + ENTRANCE_OFFSET, rest.y),
+        vel: new THREE.Vector2(0, 0),
+        rot: 0,
+        rotVel: 0,
+        rest: new THREE.Vector2(rest.x, rest.y),
+        restRot: rest.rot,
+        el: cards[i],
+        hovered: false,
+        width: 438,
+        height: 80,
+        arrived: false,     // has this card started its entrance?
+        settled: false,     // has this card reached rest?
+      }));
+
+      // Hide cards initially off-screen
+      bodies.forEach(b => {
+        b.el.style.opacity = '0';
+        b.el.style.transition = 'none';
+      });
+
+      // Entrance order: 5th card first (index 4), then 4,3,2,1
+      const entranceOrder = [4, 3, 2, 1, 0];
+      const ENTRANCE_DELAY = 180;  // ms between each card entrance
+      const ENTRANCE_DURATION = 500; // ms each card takes to arrive
+
+      // ===== SCROLL OBSERVER =====
+      const scrollObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting && !entranceTriggered) {
+            entranceTriggered = true;
+            // Start left side
+            entrarIz.classList.add('animate-in');
+            // Start card entrances staggered
+            setTimeout(() => startCardEntrances(), 200);
+            scrollObserver.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.1, rootMargin: '0px 0px -30px 0px' });
+
+      scrollObserver.observe(section);
+
+      function startCardEntrances() {
+        entranceOrder.forEach((cardIndex, seqIndex) => {
+          const body = bodies[cardIndex];
+          const startTime = seqIndex * ENTRANCE_DELAY;
+
+          setTimeout(() => {
+            body.arrived = true;
+            body.el.style.opacity = '1';
+            body.entranceStart = performance.now();
+            body.entranceFrom = { x: body.pos.x, y: body.pos.y, rot: body.rot };
+          }, startTime);
+        });
+
+        // After all cards finished entrance + small buffer
+        const totalEntranceTime = (entranceOrder.length - 1) * ENTRANCE_DELAY + ENTRANCE_DURATION + 200;
+        setTimeout(() => {
+          entrancePhase = false;
+          physicsActive = true;
+          // Snap positions to rest
+          bodies.forEach(b => {
+            b.pos.set(b.rest.x, b.rest.y);
+            b.rot = b.restRot;
+            b.vel.set(0, 0);
+            b.rotVel = 0;
+          });
+        }, totalEntranceTime);
+      }
+
+      // ===== PHYSICS CONSTANTS =====
+      // Entrance phase: softer springs for a natural landing
+      const ENTRANCE_SPRING = 0.08;
+      const ENTRANCE_DAMPING = 0.78;
+      const ENTRANCE_ROT_SPRING = 0.05;
+      const ENTRANCE_ROT_DAMPING = 0.78;
+
+      // Hover phase: tighter springs for subtle response
+      const HOVER_SPRING = 0.05;
+      const HOVER_DAMPING = 0.90;
+      const HOVER_ROT_SPRING = 0.04;
+      const HOVER_ROT_DAMPING = 0.88;
+      const HOVER_FORCE = 0.35;
+      const NEIGHBOR_FORCE = 0.12;
+
+      // ===== MOUSE TRACKING =====
+      const mouse = new THREE.Vector2(9999, 9999);
+      let hoveredIndex = -1;
+
+      entrarDeEl.addEventListener('mousemove', (e) => {
+        if (!physicsActive) return;
+        const rect = entrarDeEl.getBoundingClientRect();
+        mouse.set(e.clientX - rect.left, e.clientY - rect.top);
+        hoveredIndex = -1;
+        bodies.forEach((b, i) => {
+          const cx = b.pos.x + b.width / 2;
+          const cy = b.pos.y + b.height / 2;
+          if (Math.abs(mouse.x - cx) < b.width / 2 + 10 && Math.abs(mouse.y - cy) < b.height / 2 + 10) {
+            hoveredIndex = i;
+          }
+        });
+        bodies.forEach((b, i) => { b.hovered = (i === hoveredIndex); });
+      });
+
+      entrarDeEl.addEventListener('mouseleave', () => {
+        mouse.set(9999, 9999);
+        hoveredIndex = -1;
+        bodies.forEach(b => { b.hovered = false; });
+      });
+
+      // ===== THREE.JS CLOCK =====
+      const clock = new THREE.Clock();
+
+      // ===== PHYSICS STEP =====
+      function physicsStep() {
+        const dt = Math.min(clock.getDelta(), 0.033);
+        const force = new THREE.Vector2();
+
+        const springK = entrancePhase ? ENTRANCE_SPRING : HOVER_SPRING;
+        const damping = entrancePhase ? ENTRANCE_DAMPING : HOVER_DAMPING;
+        const rotSpringK = entrancePhase ? ENTRANCE_ROT_SPRING : HOVER_ROT_SPRING;
+        const rotDamping = entrancePhase ? ENTRANCE_ROT_DAMPING : HOVER_ROT_DAMPING;
+
+        bodies.forEach((body, i) => {
+          if (!body.arrived) return;
+
+          force.set(0, 0);
+
+          // 1. Spring toward rest position
+          force.x += (body.rest.x - body.pos.x) * springK;
+          force.y += (body.rest.y - body.pos.y) * springK;
+
+          // 2. Rotational spring toward rest rotation
+          body.rotVel += (body.restRot - body.rot) * rotSpringK;
+          body.rotVel *= rotDamping;
+
+          // 3. Hover interactions (only when physics active)
+          if (physicsActive && body.hovered) {
+            force.y -= HOVER_FORCE;
+            force.x += (mouse.x - (body.pos.x + body.width / 2)) * 0.002;
+          }
+
+          // 4. Neighbor propagation
+          if (physicsActive && hoveredIndex >= 0 && hoveredIndex !== i) {
+            const dist = Math.abs(hoveredIndex - i);
+            if (dist <= 2) {
+              const factor = NEIGHBOR_FORCE / (dist * dist);
+              const dir = i > hoveredIndex ? 1 : -1;
+              force.y += dir * factor;
+            }
+          }
+
+          // 5. Repulsion between overlapping cards
+          bodies.forEach((other, j) => {
+            if (i === j || !other.arrived) return;
+            const dy = body.pos.y - other.pos.y;
+            const overlap = body.height - Math.abs(dy);
+            if (overlap > 0) {
+              force.y += (dy > 0 ? 1 : -1) * overlap * 0.04;
+            }
+          });
+
+          // Integrate
+          body.vel.x += force.x * dt * 60;
+          body.vel.y += force.y * dt * 60;
+          body.vel.x *= damping;
+          body.vel.y *= damping;
+          body.pos.x += body.vel.x * dt * 60;
+          body.pos.y += body.vel.y * dt * 60;
+          body.rot += body.rotVel * dt * 60;
+        });
+      }
+
+      // Ease-out cubic for smooth entrance
+      function easeOutCubic(t) {
+        return 1 - Math.pow(1 - t, 3);
+      }
+
+      // ===== RENDER LOOP =====
+      function render() {
+        const now = performance.now();
+
+        if (entrancePhase) {
+          // Entrance: interpolate each card from start → rest over ENTRANCE_DURATION
+          bodies.forEach(body => {
+            if (!body.arrived || !body.entranceFrom) return;
+            const elapsed = now - body.entranceStart;
+            const t = Math.min(elapsed / ENTRANCE_DURATION, 1);
+            const e = easeOutCubic(t);
+
+            body.pos.x = body.entranceFrom.x + (body.rest.x - body.entranceFrom.x) * e;
+            body.pos.y = body.entranceFrom.y + (body.rest.y - body.entranceFrom.y) * e;
+            body.rot = body.entranceFrom.rot + (body.restRot - body.entranceFrom.rot) * e;
+
+            const dx = body.pos.x - body.rest.x;
+            const dy = body.pos.y - body.rest.y;
+            body.el.style.transform = `translate(${dx.toFixed(2)}px, ${dy.toFixed(2)}px) rotate(${body.rot.toFixed(2)}deg)`;
+          });
+        } else {
+          // Physics phase: hover interactions
+          physicsStep();
+
+          bodies.forEach(body => {
+            if (!body.arrived) return;
+            const dx = body.pos.x - body.rest.x;
+            const dy = body.pos.y - body.rest.y;
+            let transform = `translate(${dx.toFixed(2)}px, ${dy.toFixed(2)}px) rotate(${body.rot.toFixed(2)}deg)`;
+            if (body.hovered && physicsActive) {
+              transform += ' scale(1.015)';
+            }
+            body.el.style.transform = transform;
+          });
+        }
+
+        requestAnimationFrame(render);
+      }
+
+      clock.start();
+      requestAnimationFrame(render);
+
+    } // end else (desktop-only physics)
+
+    // ===== STACKED CARDS — slide from bottom + tab sync + click =====
+    const sectionProducts = document.getElementById('sectionProducts');
+    const stackPanels = document.querySelectorAll('.product-panel');
+    const panelsStackEl = document.getElementById('panelsStack');
+    const productTabs = document.querySelectorAll('.products-tab');
+    const numCards = stackPanels.length;
+    let currentActiveTab = 0;
+
+    function updateTabs(index) {
+      if (index === currentActiveTab) return;
+      currentActiveTab = index;
+      productTabs.forEach((t, i) => {
+        t.classList.toggle('active', i === index);
+      });
+    }
+
+    function updatePanels() {
+      if (!sectionProducts || !panelsStackEl) return;
+
+      const rect = sectionProducts.getBoundingClientRect();
+      const sectionH = sectionProducts.offsetHeight;
+      const viewH = window.innerHeight;
+      const scrolled = -rect.top;
+      const totalScroll = sectionH - viewH;
+
+      // Only start animating once the section top reaches the viewport top
+      if (rect.top > 0) {
+        // Section hasn't reached viewport top yet — keep all cards at start
+        stackPanels.forEach((panel, i) => {
+          if (i === 0) {
+            panel.style.transform = 'translateY(0)';
+            panel.style.zIndex = 1;
+          } else {
+            panel.style.transform = `translateY(${viewH}px)`;
+            panel.style.zIndex = i + 1;
+          }
+        });
+        updateTabs(0);
+        return;
+      }
+
+      const progress = Math.max(0, Math.min(scrolled / totalScroll, 1));
+      const panelH = panelsStackEl.offsetHeight;
+
+      let visibleCard = 0;
+
+      stackPanels.forEach((panel, i) => {
+        if (i === 0) {
+          panel.style.transform = 'translateY(0)';
+          panel.style.zIndex = 1;
+          return;
+        }
+
+        const sliceSize = 1 / (numCards - 1);
+        const cardStart = (i - 1) * sliceSize;
+        const cardEnd = i * sliceSize;
+
+        const clamped = Math.max(cardStart, Math.min(progress, cardEnd));
+        const localProgress = (clamped - cardStart) / (cardEnd - cardStart);
+
+        // Card slides up from just below the stack (panel height)
+        const translateY = panelH * (1 - localProgress);
+
+        panel.style.transform = `translateY(${translateY}px)`;
+        panel.style.zIndex = i + 1;
+
+        if (localProgress > 0.5) {
+          visibleCard = i;
+        }
+      });
+
+      updateTabs(visibleCard);
+    }
+
+    // Tab click → scroll to the right position
+    productTabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        const index = parseInt(tab.dataset.tab);
+        if (!sectionProducts) return;
+
+        const sectionH = sectionProducts.offsetHeight;
+        const viewH = window.innerHeight;
+        const totalScroll = sectionH - viewH;
+        const sectionTop = sectionProducts.getBoundingClientRect().top + window.scrollY;
+
+        // Calculate target scroll for this card index
+        let targetProgress;
+        if (index === 0) {
+          targetProgress = 0;
+        } else {
+          const sliceSize = 1 / (numCards - 1);
+          targetProgress = index * sliceSize;
+        }
+
+        const targetScroll = sectionTop + (targetProgress * totalScroll);
+        window.scrollTo({ top: targetScroll, behavior: 'smooth' });
+      });
+    });
+
+    if (window.matchMedia('(min-width: 768px)').matches) {
+      window.addEventListener('scroll', updatePanels, { passive: true });
+      updatePanels();
+    }
+
+    // ===== ABOUT CARDS CAROUSEL =====
+    (function() {
+      var cards = document.querySelectorAll('#aboutStage .about-card');
+      var dots = document.querySelectorAll('#aboutDots .about-dot');
+      if (!cards.length) return;
+
+      var current = 0;
+      var animating = false;
+
+      // Show first card immediately
+      cards[0].classList.add('active');
+
+      function goTo(idx) {
+        if (idx === current || animating) return;
+        animating = true;
+        var prev = current;
+        var direction = idx > prev ? 1 : -1; // 1=forward, -1=backward
+
+        var oldCard = cards[prev];
+        var newCard = cards[idx];
+
+        // Position the new card off-screen on the entry side (no transition)
+        newCard.className = 'about-card ' + (direction > 0 ? 'enter-right' : 'enter-left');
+
+        // Force reflow so the enter position is applied before animating
+        void newCard.offsetWidth;
+
+        // Animate old card out
+        oldCard.className = 'about-card ' + (direction > 0 ? 'exit-left' : 'exit-right');
+
+        // Animate new card in
+        newCard.className = 'about-card active';
+
+        // Update dots
+        dots.forEach(function(d, i) {
+          d.classList.toggle('active', i === idx);
+        });
+
+        current = idx;
+
+        // Wait for animation to finish
+        setTimeout(function() {
+          animating = false;
+        }, 500);
+      }
+
+      // Dot clicks
+      dots.forEach(function(dot) {
+        dot.addEventListener('click', function() {
+          goTo(parseInt(dot.dataset.slide));
+          resetAutoplay();
+        });
+      });
+
+      // Autoplay
+      var AUTOPLAY_MS = 4000;
+      var autoplayId = null;
+
+      function startAutoplay() {
+        if (autoplayId) return;
+        autoplayId = setInterval(function() {
+          var next = (current + 1) % cards.length;
+          goTo(next);
+        }, AUTOPLAY_MS);
+      }
+
+      function stopAutoplay() {
+        if (autoplayId) {
+          clearInterval(autoplayId);
+          autoplayId = null;
+        }
+      }
+
+      function resetAutoplay() {
+        stopAutoplay();
+        startAutoplay();
+      }
+
+      var stage = document.getElementById('aboutStage');
+      if (stage) {
+        stage.addEventListener('mouseenter', stopAutoplay);
+        stage.addEventListener('mouseleave', startAutoplay);
+      }
+
+      startAutoplay();
+    })();
+
+  </script>
+
+  <!-- GSAP + ScrollTrigger -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.7/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.7/ScrollTrigger.min.js"></script>
+  <script>
+    gsap.registerPlugin(ScrollTrigger);
+
+    // --- Hero entrance animation ---
+    (function () {
+      var content = document.querySelector('.hero-content');
+      var image = document.querySelector('.hero-image-wrapper');
+      var arrows = document.querySelector('.carousel-arrows');
+      if (!content || !image) return;
+
+      if (arrows) gsap.set(arrows, { autoAlpha: 0 });
+
+      var isMobile = window.innerWidth < 768;
+      var slideX = isMobile ? 40 : 80;
+
+      var tl = gsap.timeline({ delay: 0.3 });
+
+      tl.to(content, {
+        autoAlpha: 1, x: 0,
+        duration: 1.2,
+        ease: 'power3.out'
+      });
+
+      tl.to(image, {
+        autoAlpha: 1, x: 0,
+        duration: 1.2,
+        ease: 'power3.out'
+      }, 0.15);
+
+      if (arrows && !isMobile) {
+        tl.to(arrows, {
+          autoAlpha: 1,
+          duration: 0.6,
+          ease: 'power2.out'
+        }, 1.2);
+      }
+    })();
+
+    // --- Testimonials auto-scroll ---
+    (function () {
+      const track = document.querySelector('.testimonios-track');
+      const viewport = document.querySelector('.testimonios-right');
+      if (!track || !viewport) return;
+
+      const originalCards = track.querySelectorAll('.testimonio-card');
+      originalCards.forEach(card => {
+        const clone = card.cloneNode(true);
+        clone.setAttribute('aria-hidden', 'true');
+        track.appendChild(clone);
+      });
+
+      requestAnimationFrame(() => {
+        const gap = 32;
+        let setHeight = 0;
+        originalCards.forEach((card, i) => {
+          setHeight += card.offsetHeight;
+          if (i < originalCards.length - 1) setHeight += gap;
+        });
+        setHeight += gap;
+
+        const scrollTween = gsap.to(track, {
+          y: -setHeight,
+          duration: 35,
+          ease: 'none',
+          repeat: -1,
+          paused: true
+        });
+
+        const allCards = track.querySelectorAll('.testimonio-card');
+        gsap.set(allCards, { autoAlpha: 0, y: 60 });
+
+        ScrollTrigger.create({
+          trigger: '.section-testimonios',
+          start: 'top 80%',
+          once: true,
+          onEnter: () => {
+            gsap.to(allCards, {
+              autoAlpha: 1,
+              y: 0,
+              duration: 0.8,
+              ease: 'power3.out',
+              stagger: 0.15,
+              onComplete: () => {
+                scrollTween.play();
+              }
+            });
+          }
+        });
+
+        viewport.addEventListener('mouseenter', () => {
+          gsap.to(scrollTween, { timeScale: 0, duration: 0.6, ease: 'power2.out' });
+        });
+        viewport.addEventListener('mouseleave', () => {
+          gsap.to(scrollTween, { timeScale: 1, duration: 0.6, ease: 'power2.in' });
+        });
+
+        viewport.addEventListener('touchstart', () => {
+          gsap.to(scrollTween, { timeScale: 0, duration: 0.6, ease: 'power2.out' });
+        }, { passive: true });
+        viewport.addEventListener('touchend', () => {
+          gsap.to(scrollTween, { timeScale: 1, duration: 0.6, ease: 'power2.in' });
+        }, { passive: true });
+
+        const mm = gsap.matchMedia();
+        mm.add('(prefers-reduced-motion: reduce)', () => {
+          scrollTween.kill();
+          gsap.set(allCards, { autoAlpha: 1, y: 0 });
+        });
+      });
+    })();
+
+    // --- Community gallery animation ---
+    (function () {
+      const wrapper = document.querySelector('.community-gallery-wrapper');
+      const trailPath = document.querySelector('.trail-path');
+      const imgs = document.querySelectorAll('.community-gallery .gallery-img');
+      if (!wrapper || !trailPath || !imgs.length) return;
+
+      if (window.innerWidth < 768) {
+        // On mobile, just show images without animation
+        imgs.forEach((img) => { gsap.set(img, { autoAlpha: 1 }); });
+        gsap.set(trailPath, { autoAlpha: 0 });
+        return;
+      }
+
+      const cards = [
+        { yRest: 35, z: 2, sc: 1.0 },
+        { yRest: -25, z: 4, sc: 1.04 },
+        { yRest: 50, z: 2, sc: 0.96 },
+        { yRest: -15, z: 4, sc: 1.03 },
+        { yRest: 8, z: 2, sc: 1.0 },
+      ];
+
+      const pathLen = trailPath.getTotalLength();
+      gsap.set(trailPath, { strokeDasharray: pathLen, strokeDashoffset: pathLen });
+
+      imgs.forEach((img, i) => {
+        gsap.set(img, { autoAlpha: 0, y: 160, scale: 0.55, rotation: gsap.utils.random(-10, 10), zIndex: cards[i].z });
+      });
+
+      const cardDur = 1.4;
+      const cardGap = 0.7;
+      const totalCardTime = cardGap * (imgs.length - 1) + cardDur;
+
+      const tl = gsap.timeline({
+        scrollTrigger: { trigger: '.section-comunidad', start: 'top 75%', once: true }
+      });
+
+      tl.to(trailPath, { strokeDashoffset: 0, duration: totalCardTime, ease: 'none' }, 0);
+
+      imgs.forEach((img, i) => {
+        const c = cards[i];
+        tl.to(img, {
+          autoAlpha: 1,
+          y: c.yRest,
+          scale: c.sc,
+          rotation: 0,
+          duration: cardDur,
+          ease: 'power3.out',
+        }, i * cardGap);
+      });
+
+      tl.to(trailPath, { autoAlpha: 0, duration: 1.5, ease: 'power2.out' }, totalCardTime + 0.3);
+
+      tl.call(() => {
+        imgs.forEach((img, i) => {
+          const c = cards[i];
+          const period = 6 + i * 1.5;
+          const phase = i * 0.9;
+
+          gsap.to(img, {
+            x: (i % 2 === 0 ? 14 : -14),
+            duration: period,
+            ease: 'sine.inOut',
+            yoyo: true,
+            repeat: -1,
+            delay: phase
+          });
+
+          gsap.to(img, {
+            rotation: (i % 2 === 0 ? 2.5 : -2.5),
+            duration: period * 1.2,
+            ease: 'sine.inOut',
+            yoyo: true,
+            repeat: -1,
+            delay: phase + 0.4
+          });
+
+          gsap.to(img, {
+            scale: c.sc + (i % 2 === 0 ? 0.035 : -0.03),
+            duration: period * 1.5,
+            ease: 'sine.inOut',
+            yoyo: true,
+            repeat: -1,
+            delay: phase + 1
+          });
+        });
+      });
+
+      gsap.matchMedia().add('(prefers-reduced-motion: reduce)', () => {
+        tl.kill();
+        imgs.forEach((img, i) => {
+          gsap.set(img, { autoAlpha: 1, y: cards[i].yRest, scale: cards[i].sc, rotation: 0, zIndex: cards[i].z });
+        });
+        gsap.set(trailPath, { autoAlpha: 0 });
+      });
+    })();
+
+    // --- Noticias entrance animation ---
+    (function () {
+      var cards = document.querySelectorAll('.noticia-card');
+      if (!cards.length) return;
+
+      var isMobile = window.innerWidth < 768;
+      var dist = isMobile ? 60 : 120;
+
+      var config = [
+        { x: -dist, delay: 0 },
+        { x: dist, delay: 0.15 },
+        { x: -dist, delay: 0.3 },
+        { x: -dist, delay: 0.45 },
+        { x: dist, delay: 0.6 },
+      ];
+
+      cards.forEach(function (card, i) {
+        var c = config[i];
+        gsap.set(card, { autoAlpha: 0, x: c.x });
+        gsap.to(card, {
+          autoAlpha: 1,
+          x: 0,
+          duration: 1,
+          ease: 'power3.out',
+          delay: c.delay,
+          scrollTrigger: {
+            trigger: '.section-noticias',
+            start: 'top 75%',
+            once: true
+          }
+        });
+      });
+    })();
+  </script>
+
+  <!-- ===== FLOWING LINE — from scratch ===== -->
+  <script>
+    (function () {
+      if (window.innerWidth < 1024) return;
+
+      var path = document.getElementById('flowPath');
+      var svg = document.getElementById('flowSvg');
+      var wrap = document.getElementById('flowingLine');
+      var prod = document.getElementById('sectionProducts');
+      var panelsStack = document.getElementById('panelsStack');
+      if (!path || !svg || !wrap || !prod) return;
+
+      function build() {
+        var pw = document.querySelector('.page-wrapper');
+        var W = pw ? pw.offsetWidth : 1440;
+        var EXTRA_TOP = 140;
+        var H = prod.offsetTop + EXTRA_TOP + 100;
+
+        svg.setAttribute('width', W);
+        svg.setAttribute('height', H);
+        svg.setAttribute('viewBox', '0 0 ' + W + ' ' + H);
+        wrap.style.height = H + 'px';
+
+        // Ultra-smooth path: 200 points, starts at upper-right, exits to the left
+        var steps = 200;
+        var centerX = W * 0.5;
+        var amplitude = W * 0.32;
+        var exitStartT = 0.75;
+        var exitTargetX = -W * 0.2;
+
+        var points = [];
+        for (var i = 0; i <= steps; i++) {
+          var t = i / steps;
+          var y = t * H;
+          // Starts at upper-right (cos(0)=1), sways in 2 wide graceful curves
+          var x = centerX + Math.cos(t * Math.PI * 3) * amplitude;
+          // Subtle secondary motion for organic feel
+          x += Math.sin(t * Math.PI * 5) * (amplitude * 0.12);
+
+          // Blend toward left edge for the final stretch so it exits leftward
+          if (t > exitStartT) {
+            var k = (t - exitStartT) / (1 - exitStartT);
+            var eased = k * k * (3 - 2 * k);
+            x = x * (1 - eased) + exitTargetX * eased;
+          }
+          points.push({ x: x, y: y });
+        }
+
+        // Catmull-Rom → Cubic Bezier, tension 0.45 for perfectly round curves
+        var d = 'M ' + points[0].x.toFixed(1) + ' ' + points[0].y.toFixed(1);
+        for (var i = 0; i < points.length - 1; i++) {
+          var p0 = points[Math.max(i - 1, 0)];
+          var p1 = points[i];
+          var p2 = points[i + 1];
+          var p3 = points[Math.min(i + 2, points.length - 1)];
+          var tension = 0.45;
+          var cp1x = p1.x + (p2.x - p0.x) * tension;
+          var cp1y = p1.y + (p2.y - p0.y) * tension;
+          var cp2x = p2.x - (p3.x - p1.x) * tension;
+          var cp2y = p2.y - (p3.y - p1.y) * tension;
+          d += ' C ' + cp1x.toFixed(1) + ' ' + cp1y.toFixed(1)
+            + ', ' + cp2x.toFixed(1) + ' ' + cp2y.toFixed(1)
+            + ', ' + p2.x.toFixed(1) + ' ' + p2.y.toFixed(1);
+        }
+
+        path.setAttribute('d', d);
+        return path.getTotalLength();
+      }
+
+      var len = build();
+      var EXTRA_TOP = 140;
+      var H = prod.offsetTop + EXTRA_TOP + 100; // mirrors build()'s H formula
+      gsap.set(path, { strokeDasharray: len, strokeDashoffset: len });
+      path.style.opacity = '1';
+      wrap.style.transform = '';
+      wrap.style.opacity = '1';
+
+      // Tip of the curve tracks the vertical center of the viewport
+      var targetProgress = 0;
+      var currentProgress = 0;
+      var rafId = null;
+
+      function animateTip() {
+        currentProgress += (targetProgress - currentProgress) * 0.18;
+        path.style.strokeDashoffset = len * (1 - currentProgress);
+        if (Math.abs(targetProgress - currentProgress) > 0.0005) {
+          rafId = requestAnimationFrame(animateTip);
+        } else {
+          currentProgress = targetProgress;
+          path.style.strokeDashoffset = len * (1 - currentProgress);
+          rafId = null;
+        }
+      }
+
+      function updateTarget() {
+        var scrollY = window.scrollY;
+        var vh = window.innerHeight;
+        // At scrollY=0, tip sits at top of viewport; drifts to center as user scrolls
+        var centerOffset = Math.min(scrollY, vh / 2);
+        var tipY = scrollY + centerOffset + EXTRA_TOP;
+        targetProgress = Math.min(Math.max(tipY / H, 0), 1);
+
+        // Once the tip has left the viewport through the left side, fade the rest
+        var fadeStart = prod.offsetTop - vh * 0.1;
+        var fadeEnd = prod.offsetTop + vh * 0.2;
+        var fade = (scrollY - fadeStart) / (fadeEnd - fadeStart);
+        var opacity = 1 - Math.min(Math.max(fade, 0), 1);
+        wrap.style.opacity = opacity;
+
+        if (rafId === null) rafId = requestAnimationFrame(animateTip);
+      }
+
+      window.addEventListener('scroll', updateTarget, { passive: true });
+      updateTarget();
+
+      var resizeTimer;
+      window.addEventListener('resize', function () {
+        clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(function () {
+          if (window.innerWidth < 1024) {
+            wrap.style.display = 'none';
+            return;
+          }
+          wrap.style.display = '';
+          len = build();
+          H = prod.offsetTop + EXTRA_TOP + 100;
+          gsap.set(path, { strokeDasharray: len });
+          updateTarget();
+        }, 300);
+      });
+    })();
+  </script>
+
+  <script src="assets/js/main.js"></script>
+</body>
+
+</html>

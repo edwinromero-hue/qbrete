@@ -1,0 +1,176 @@
+/* ==========================================
+   QBRETE — Community Card Component
+   Figma: 574:3259 (Nuestras Comunidades)
+   Spec card: 384×448 · image 384×200 (radius 32) + body 352×288 superpuesto -40px
+   ========================================== */
+
+.community-card {
+  --cc-width: 384px;
+  --cc-height: 448px;
+  --cc-image-height: 200px;
+  --cc-body-width: 352px;
+  --cc-body-height: 288px;
+  --cc-body-overlap: 40px;
+  --cc-radius: 32px;
+  --cc-body-padding: 24px;
+  --cc-body-gap: 32px;
+  --cc-info-gap: 16px;
+  --cc-shadow: 0 4px 30px rgba(0, 0, 0, 0.08);
+  --cc-shadow-hover: 0 12px 40px rgba(0, 0, 0, 0.12);
+  --cc-chip-bg: linear-gradient(to top, #FFF2E5 10%, #fff 70%);
+  --cc-chip-color: #FF4E00;
+  --cc-title-color: #000;
+  --cc-desc-color: #000;
+
+  width: var(--cc-width);
+  height: var(--cc-height);
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.community-card__image {
+  width: var(--cc-width);
+  height: var(--cc-image-height);
+  border-radius: var(--cc-radius);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  padding: 16px;
+  overflow: hidden;
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+
+.community-card__chip {
+  display: inline-flex;
+  align-items: center;
+  padding: 8px 16px;
+  background: var(--cc-chip-bg);
+  border-radius: 16px;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 18px;
+  color: var(--cc-chip-color);
+}
+
+.community-card__body {
+  width: var(--cc-body-width);
+  height: var(--cc-body-height);
+  margin: calc(-1 * var(--cc-body-overlap)) auto 0;
+  background: #fff;
+  border-radius: var(--cc-radius);
+  padding: var(--cc-body-padding);
+  display: flex;
+  flex-direction: column;
+  gap: var(--cc-body-gap);
+  justify-content: space-between;
+  box-shadow: var(--cc-shadow);
+  position: relative;
+  z-index: 1;
+  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+              box-shadow 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.community-card__info {
+  display: flex;
+  flex-direction: column;
+  gap: var(--cc-info-gap);
+}
+
+.community-card__title {
+  font-family: 'Century Gothic', 'Montserrat', sans-serif;
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 31px;
+  color: var(--cc-title-color);
+  margin: 0;
+}
+
+.community-card__desc {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 22px;
+  color: var(--cc-desc-color);
+  margin: 0;
+}
+
+.community-card__footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 32px;
+  height: 42px;
+}
+
+.community-card__members {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  color: #000;
+}
+
+.community-card__members svg {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+}
+
+/* Estados interactivos */
+.community-card:hover .community-card__body {
+  transform: translateY(-4px);
+  box-shadow: var(--cc-shadow-hover);
+}
+
+.community-card:focus-within .community-card__body {
+  box-shadow: 0 0 0 2px rgba(255, 78, 0, 0.35), var(--cc-shadow);
+}
+
+/* ========== ANIMACIÓN DE ENTRADA (suave, UX/UI) ========== */
+.community-card {
+  opacity: 0;
+  transform: translateY(10px);
+  transition:
+    opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
+}
+
+.community-card.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+.com-cards-grid > .community-card:nth-child(1).is-visible { transition-delay: 0.30s; }
+.com-cards-grid > .community-card:nth-child(2).is-visible { transition-delay: 0.45s; }
+.com-cards-grid > .community-card:nth-child(3).is-visible { transition-delay: 0.60s; }
+.com-cards-grid > .community-card:nth-child(4).is-visible { transition-delay: 0.75s; }
+
+/* Responsive */
+@media (max-width: 1023px) {
+  .community-card {
+    --cc-width: 100%;
+    --cc-body-width: calc(100% - 32px);
+    max-width: 384px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .community-card__body {
+    transition: none;
+  }
+  .community-card:hover .community-card__body {
+    transform: none;
+  }
+  .community-card {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+}

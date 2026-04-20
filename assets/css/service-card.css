@@ -1,0 +1,198 @@
+/* ==========================================
+   QBRETE — Service Card Component
+   Tarjeta de servicio con imagen superior, info
+   y CTA. Tematizable mediante CSS custom properties.
+   ========================================== */
+
+/* ========== VARIABLES ========== */
+.service-card {
+  --sc-width: 384px;
+  --sc-min-height: 533px;
+  --sc-radius: 32px;
+  --sc-bg: #FFFFFF;
+  --sc-shadow: 0 4px 30px rgba(0, 0, 0, 0.08);
+  --sc-shadow-hover: 0 8px 40px rgba(0, 0, 0, 0.12);
+
+  --sc-image-height: 200px;
+  --sc-image-padding: 16px;
+  --sc-image-bg: linear-gradient(135deg, #FFF5ED 0%, #FFE8D6 100%);
+
+  --sc-body-padding: 24px;
+  --sc-body-gap: 32px;
+
+  --sc-accent: #FF4E00;
+  --sc-accent-gradient: linear-gradient(180deg, #FF4E00, #FF8A5C);
+  --sc-chip-bg: linear-gradient(135deg, #FFF2E5 10%, #FFFFFF 70%);
+  --sc-check-bg: linear-gradient(to top, #FFF2E5 10%, #FFFFFF 70%);
+}
+
+/* ========== CARD ========== */
+.service-card {
+  width: var(--sc-width);
+  min-height: var(--sc-min-height);
+  background: var(--sc-bg);
+  border-radius: var(--sc-radius);
+  overflow: hidden;
+  box-shadow: var(--sc-shadow);
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.3s, box-shadow 0.3s;
+  will-change: transform;
+}
+
+.service-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--sc-shadow-hover);
+}
+
+/* ========== IMAGE AREA ========== */
+.service-card-image {
+  position: relative;
+  height: var(--sc-image-height);
+  padding: var(--sc-image-padding);
+  background: var(--sc-image-bg);
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  flex-direction: column;
+  border-radius: var(--sc-radius) var(--sc-radius) 0 0;
+}
+
+.service-card-image-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+/* ---- Icon box ---- */
+.service-icon-box {
+  width: 48px;
+  height: 48px;
+  background: var(--sc-accent-gradient);
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.service-icon-box svg,
+.service-icon-box img {
+  width: 30px;
+  height: 30px;
+  display: block;
+}
+
+/* ---- Chip label (e.g., "Popular") ---- */
+.service-chip {
+  display: inline-flex;
+  align-items: center;
+  padding: 8px 16px;
+  background: var(--sc-chip-bg);
+  border-radius: 16px;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--sc-accent);
+}
+
+/* ========== BODY ========== */
+.service-card-body {
+  padding: var(--sc-body-padding);
+  display: flex;
+  flex-direction: column;
+  gap: var(--sc-body-gap);
+  flex: 1;
+}
+
+.service-card-info {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.service-card-info h3 {
+  font-family: 'Century Gothic', 'Montserrat', sans-serif;
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 31px;
+  color: #000;
+}
+
+.service-card-info > p {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 22px;
+  color: #000;
+}
+
+/* ========== FEATURES LIST ========== */
+.service-features {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.service-feature {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  color: #000;
+}
+
+.service-feature .check {
+  width: 22px;
+  height: 22px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  background: var(--sc-check-bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.service-feature .check svg {
+  width: 14px;
+  height: 14px;
+}
+
+/* ========== CTA BUTTON (within service-card) ========== */
+.service-card .btn {
+  width: 100%;
+}
+
+/* ========== IMAGE VARIANTS ==========
+   Cada variante sobreescribe --sc-image-bg con la imagen de fondo.
+   Uso: <div class="service-card service-card--mascotas">
+================================================================*/
+.service-card--mascotas {
+  --sc-image-bg: url('../images/products/service-mascotas.png') center/cover no-repeat;
+}
+
+.service-card--bicicletas {
+  --sc-image-bg: url('../images/products/service-bicicletas.png') center/cover no-repeat;
+}
+
+.service-card--hogar {
+  --sc-image-bg: url('../images/products/service-hogar.png') center/cover no-repeat;
+}
+
+.service-card--veterinario {
+  --sc-image-bg: url('../images/products/service-veterinario.png') center/cover no-repeat;
+}
+
+/* ========== RESPONSIVE ========== */
+@media (max-width: 1023px) {
+  .service-card {
+    --sc-width: calc(50% - 16px);
+  }
+}
+
+@media (max-width: 767px) {
+  .service-card {
+    --sc-width: 100%;
+  }
+}

@@ -1,0 +1,267 @@
+/* ==========================================
+   QBRETE — Product Panel Component
+   Sistema de tarjetas de producto con variantes
+   tematizadas mediante CSS custom properties.
+   ========================================== */
+
+/* ========== VARIABLES POR VARIANTE ========== */
+/* Default (fallback): naranja */
+.product-panel {
+  --pc-panel-bg: linear-gradient(135deg, #FF4E00 0%, #CC3E00 100%);
+  --pc-panel-padding: 32px;
+  --pc-panel-radius: 32px;
+  --pc-panel-gap: 32px;
+
+  --pc-card-bg: #FFFFFF;
+  --pc-card-border: #F5F5F5;
+  --pc-card-radius: 24px;
+  --pc-card-padding: 36px;
+  --pc-card-gap: 16px;
+  --pc-card-shadow: 0 4px 30px rgba(0, 0, 0, 0.08);
+
+  --pc-accent: #FF4E00;
+  --pc-accent-hover: #CC3E00;
+  --pc-accent-text: #FFFFFF;
+
+  --pc-chip-bg: #FFF2E5;
+  --pc-chip-color: var(--pc-accent);
+  --pc-icon-bg: #FFF2E5;
+  --pc-check-bg: #FFF2E5;
+}
+
+/* Mascotas — morado/violeta */
+.product-panel--mascotas {
+  --pc-panel-bg: linear-gradient(135deg, #A086F9 1%, #885FFF 55%);
+  --pc-accent: #7E60FE;
+  --pc-accent-hover: #6B4EEB;
+  --pc-chip-bg: linear-gradient(to top, #FFF2E5 10%, #FFFFFF 70%);
+  --pc-chip-color: #7E60FE;
+  --pc-icon-bg: linear-gradient(to top, #FFF2E5 10%, #FFFFFF 70%);
+  --pc-check-bg: linear-gradient(to top, #FFF2E5 10%, #FFFFFF 70%);
+}
+
+/* Bicicletas — azul */
+.product-panel--bicicletas {
+  --pc-panel-bg: linear-gradient(160deg, #546AFF 0%, #1E3D8B 100%);
+  --pc-accent: #1E3D8B;
+  --pc-accent-hover: #162F6E;
+  --pc-chip-bg: #FFF2E5;
+  --pc-chip-color: #1E3D8B;
+  --pc-icon-bg: #FFF2E5;
+  --pc-check-bg: #FFF2E5;
+}
+
+/* ========== PANEL (contenedor) ========== */
+.product-panel {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 1240px;
+  height: 562px;
+  padding: var(--pc-panel-padding);
+  border-radius: var(--pc-panel-radius);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--pc-panel-gap);
+  background: var(--pc-panel-bg);
+  box-shadow: 0 -4px 32px rgba(0, 0, 0, 0.15);
+  will-change: transform;
+}
+
+.product-panel .product-image {
+  width: 100%;
+  height: 100%;
+  border-radius: 0;
+  object-fit: cover;
+  order: 1;
+}
+
+/* ========== CARD (contenido blanco) ========== */
+.product-card {
+  order: 2;
+  display: flex;
+  flex-direction: column;
+  gap: var(--pc-card-gap);
+  padding: var(--pc-card-padding);
+  background: var(--pc-card-bg);
+  border: 1px solid var(--pc-card-border);
+  border-radius: var(--pc-card-radius);
+  box-shadow: var(--pc-card-shadow);
+}
+
+/* ---- Header: icon + chip ---- */
+.product-card .pc-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.product-card .pc-icon {
+  width: 64px;
+  height: 64px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  background: var(--pc-icon-bg);
+}
+
+.product-card .pc-icon svg {
+  width: 40px;
+  height: 40px;
+}
+
+.product-card .pc-chip {
+  padding: 8px 16px;
+  border-radius: 16px;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 18px;
+  background: var(--pc-chip-bg);
+  color: var(--pc-chip-color);
+}
+
+/* ---- Content ---- */
+.product-card .pc-content {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  flex: 1;
+}
+
+.product-card h3 {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 28px;
+  font-weight: 700;
+  line-height: 32px;
+  color: #000;
+}
+
+.product-card .pc-desc {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 22px;
+  color: #000;
+}
+
+/* ---- Features list ---- */
+.product-card .pc-features {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  flex: 1;
+}
+
+.product-card .pc-feature {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 16px;
+  line-height: 22px;
+  color: #000;
+}
+
+.pc-feature .pc-check {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  background: var(--pc-check-bg);
+}
+
+.pc-check svg {
+  width: 14px;
+  height: 14px;
+}
+
+/* ---- Botón CTA dentro del product-card ----
+   Toma de button.css como base (.btn .btn--primary)
+   y usa los colores de la variante del panel.
+*/
+.product-card .pc-btn {
+  width: 100%;
+  background-color: var(--pc-accent);
+  color: var(--pc-accent-text);
+}
+
+.product-card .pc-btn:hover {
+  background-color: var(--pc-accent-hover);
+}
+
+/* ========== RESPONSIVE ========== */
+@media (max-width: 1439px) {
+  .product-panel {
+    width: 100%;
+  }
+}
+
+@media (max-width: 1023px) {
+  .product-panel {
+    width: 100%;
+    height: 100%;
+    grid-template-columns: 1fr;
+    padding: 20px;
+    gap: 20px;
+  }
+
+  .product-panel .product-image {
+    height: 240px;
+    order: 1;
+  }
+
+  .product-card {
+    padding: 24px;
+  }
+
+  .product-card h3 {
+    font-size: 24px;
+  }
+
+  .product-card .pc-desc {
+    font-size: 15px;
+  }
+}
+
+@media (max-width: 767px) {
+  .product-panel {
+    position: relative;
+    flex: 0 0 calc(100vw - 48px);
+    width: calc(100vw - 48px);
+    height: auto;
+    grid-template-columns: 1fr;
+    padding: 20px;
+    gap: 16px;
+    border-radius: 24px;
+    top: 0 !important;
+    transform: none !important;
+    opacity: 1 !important;
+    scroll-snap-align: center;
+  }
+
+  .product-panel .product-image {
+    height: 200px;
+    border-radius: 16px;
+  }
+
+  .product-card {
+    padding: 20px;
+    border-radius: 16px;
+  }
+
+  .product-card .pc-features {
+    gap: 12px;
+  }
+
+  .product-card .pc-btn {
+    padding: 14px;
+    min-height: 48px;
+  }
+}

@@ -1,0 +1,330 @@
+/* ===== FOOTER (Figma 256:467) ===== */
+.footer-wrapper {
+  position: relative;
+  width: 100%;
+  margin-top: 120px;
+}
+
+.footer-curve {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.footer {
+  background: #3A3A3A;
+  padding: 0 0 42px;
+  position: relative;
+}
+
+.footer-inner {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 40px;
+  position: relative;
+  display: grid;
+  grid-template-columns: 51px 1fr;
+  column-gap: 40px;
+  align-items: stretch;
+}
+
+/* Sello Vigilado — columna izquierda que ocupa el alto de footer-top + footer-bottom */
+.footer-vigilado {
+  grid-column: 1;
+  grid-row: 1 / span 2;
+  position: relative;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.footer-vigilado img {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 394px;
+  height: 51px;
+  max-width: none;
+  transform: translate(-50%, -50%) rotate(-90deg);
+  transform-origin: center;
+  display: block;
+}
+
+.footer-top,
+.footer-bottom {
+  grid-column: 2;
+}
+
+@media (max-width: 1023px) {
+  .footer-inner {
+    grid-template-columns: 1fr;
+    row-gap: 24px;
+  }
+
+  .footer-vigilado {
+    grid-column: 1;
+    grid-row: auto;
+    order: 10;
+    height: 51px;
+  }
+
+  .footer-top,
+  .footer-bottom {
+    grid-column: 1;
+  }
+
+  .footer-vigilado img {
+    transform: translate(-50%, -50%);
+    width: auto;
+    height: 51px;
+    max-width: 100%;
+  }
+}
+
+.footer-top {
+  display: flex;
+  gap: 40px;
+  padding: 0;
+}
+
+.footer-brand {
+  flex: 0 0 320px;
+  position: relative;
+}
+
+.footer-brand .brand-logos {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.footer-brand .brand-logo {
+  height: 36px;
+  width: 100px;
+  object-fit: contain;
+  flex-shrink: 0;
+  display: block;
+}
+
+.footer-brand .brand-divider {
+  width: 1px;
+  height: 39px;
+  background: #D9D9D9;
+  flex-shrink: 0;
+}
+
+.footer-brand .brand-logo-partner {
+  height: 39px;
+  width: 100px;
+  object-fit: contain;
+  flex-shrink: 0;
+  display: block;
+}
+
+.footer-brand .brand-desc {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  color: #fff;
+  line-height: 22px;
+  margin-top: 29px;
+  max-width: 320px;
+}
+
+.footer-brand .brand-desc strong {
+  font-weight: 700;
+  line-height: 24px;
+}
+
+.footer-socials {
+  display: flex;
+  gap: 12px;
+  margin-top: 28px;
+}
+
+.footer-social {
+  width: 36px;
+  height: 36px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  text-decoration: none;
+  transition: border-color 0.2s, background 0.2s;
+}
+
+.footer-social:hover {
+  border-color: #fff;
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.footer-social svg {
+  width: 18px;
+  height: 18px;
+}
+
+.footer-columns {
+  flex: 1;
+  display: flex;
+  gap: 32px;
+}
+
+.footer-col {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.footer-col .col-title {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  color: #fff;
+  line-height: 24px;
+  text-transform: none;
+  letter-spacing: 0;
+}
+
+.footer-col .col-links {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.footer-col .col-link {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  color: #fff;
+  line-height: 22px;
+  text-decoration: none;
+  transition: opacity 0.2s;
+}
+
+.footer-col .col-link:hover {
+  opacity: 0.7;
+}
+
+.footer-contact-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.footer-contact-item .col-link {
+  font-size: 16px;
+  line-height: 22px;
+}
+
+.footer-contact-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.footer-contact-icon svg {
+  width: 18px;
+  height: 18px;
+}
+
+.footer-bottom {
+  margin: 64px 0 0;
+  background: rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 16px;
+  padding: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 84px;
+}
+
+.footer-copyright {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 14px;
+  color: #FFFFFF;
+  text-align: center;
+}
+
+/* ---- ~1439px ---- */
+@media (max-width: 1439px) {
+  .footer-inner {
+    padding: 0 32px;
+  }
+
+  .footer-columns {
+    gap: 24px;
+  }
+}
+
+/* ---- ~1023px ---- */
+@media (max-width: 1023px) {
+  .footer-inner {
+    padding: 0 24px;
+  }
+
+  .footer-top {
+    flex-wrap: wrap;
+    gap: 32px;
+  }
+
+  .footer-brand {
+    flex: 0 0 100%;
+  }
+
+  .footer-columns {
+    flex-wrap: wrap;
+  }
+
+  .footer-col {
+    flex: 1 1 calc(50% - 16px);
+    min-width: 160px;
+  }
+}
+
+/* ---- ~767px ---- */
+@media (max-width: 767px) {
+  .footer-inner {
+    padding: 0 16px;
+  }
+
+  .footer-top {
+    flex-direction: column;
+    gap: 32px;
+  }
+
+  .footer-brand {
+    flex: none;
+    width: 100%;
+  }
+
+  .footer-columns {
+    flex-direction: column;
+    gap: 28px;
+  }
+
+  .footer-col {
+    flex: none;
+    width: 100%;
+  }
+
+  .footer-bottom {
+    margin: 40px 0 24px;
+    padding: 24px 16px;
+  }
+
+  .footer-copyright {
+    font-size: 12px;
+  }
+}
